@@ -1,0 +1,28 @@
+# GCP
+.env
+*-key.json
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+
+# Terraform
+.terraform/
+.terraform.lock.hcl
+terraform.tfstate*
+
+# Docker
+*.tar
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Playwright
+.playwright-mcp/
+*.png
+dashboard-v1.png
+
+# Firebase
+dashboard/firebase-debug.log

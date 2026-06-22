@@ -1,0 +1,21 @@
+[
+  {"id": "aws",          "name": "AWS Admin Hub",           "url": "https://aws.techcloudup.com/api/health",       "category": "admin"},
+  {"id": "gcp-gke",      "name": "GCP Private GKE",         "url": "https://gcp-gke.techcloudup.com/api/health",   "category": "admin"},
+  {"id": "dba-azure",    "name": "Azure DBA/API/BI",        "url": "https://dba-azure.techcloudup.com/api/health", "category": "admin"},
+  {"id": "ai-agent",     "name": "GCP IAM Audit Agent",     "url": "https://ai-agent.techcloudup.com/api/health",  "category": "ai"},
+  {"id": "waf",          "name": "Cloudflare WAF Demo",     "url": "https://waf.techcloudup.com/api/health",       "category": "security"},
+  {"id": "ids",          "name": "Suricata IDS Dashboard",  "url": "https://ids.techcloudup.com/api/health",       "category": "security"},
+  {"id": "takedown",     "name": "Phishing Investigator",   "url": "https://takedown.techcloudup.com/api/health",  "category": "security"},
+  {"id": "dashboard",    "name": "AWS IoT Core Dashboard",  "url": "https://dashboard.iviewio.com/api/health",     "category": "iot"},
+  {"id": "n8n",          "name": "n8n Automation",           "url": "https://n8n.techcloudup.com/healthz",          "category": "automation"},
+  {"id": "techcloudup",  "name": "Tech Blog (WordPress)",   "url": "https://techcloudup.com/wp-json/",              "category": "app"},
+  {"id": "erp",          "name": "ERPNext ERP",             "url": "https://erp.iviewio.com/api/method/ping",       "category": "app"},
+  {"id": "crm",          "name": "EspoCRM",                 "url": "https://crm.iviewio.com/api/v1/",               "category": "app"},
+  {"id": "emailm",       "name": "Listmonk Mailing",        "url": "https://emailm.iviewio.com/api/health",        "category": "app"},
+  {"id": "sns",          "name": "Mixpost Social Scheduler","url": "https://sns.iviewio.com/api/health",            "category": "app"},
+  {"id": "monica",       "name": "Monica PRM",              "url": "https://monica.iviewio.com/api/health",        "category": "app"},
+  {"id": "kiosk1",       "name": "IoT Kiosk Server",        "url": "https://kiosk1.iviewio.com/health",            "category": "iot"},
+  {"id": "ai-kiosk1",    "name": "Edge AI Object Detection","url": "https://ai.kiosk1.iviewio.com/",                "category": "ai"},
+  {"id": "ai-kbeathub",  "name": "K-Drama AI Recommender",  "url": "https://ai.kbeathub.com/healthz",              "category": "ai"},
+  {"id": "hanrecipe",    "name": "Recipe Mobile WebApp",    "url": "https://hanrecipe.kbeathub.com/",              "category": "app"}
+]
