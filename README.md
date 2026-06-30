@@ -29,7 +29,7 @@ Cloud Scheduler (every 5 min)
     └──────────┘  └──────────────┘
 ```
 
-The meta dashboard itself is a health-checker that probes 19 live project endpoints and surfaces their status in real time.
+The meta dashboard itself is a health-checker that probes live project endpoints and surfaces their status in real time.
 
 ---
 
@@ -48,7 +48,7 @@ The meta dashboard itself is a health-checker that probes 19 live project endpoi
 | **IaC** | Terraform (Cloud Run v2, Artifact Registry, IAM) |
 | **CI/CD** | manual `gcloud run deploy` / Docker push |
 
-### Monitored Services (19 total)
+### Monitored Services
 
 | Domain | Stack |
 |---|---|
@@ -74,7 +74,7 @@ The meta dashboard itself is a health-checker that probes 19 live project endpoi
 ```
 health-checker/
 ├── main.py              # FastAPI app (health probe + API + static serve)
-├── projects.json        # 19 monitored endpoints with categories
+├── projects.json        # Monitored endpoint definitions with categories
 ├── Dockerfile           # Python 3.12-slim + uvicorn
 ├── requirements.txt     # fastapi, uvicorn, httpx, firebase-admin
 └── static/
@@ -115,6 +115,6 @@ The health-checker picks up `projects.json` at container start — no environmen
 
 | Endpoint | Trigger | Description |
 |---|---|---|
-| `GET /check-all` | Cloud Scheduler | Probes all 19 endpoints, writes to Firestore |
+| `GET /check-all` | Cloud Scheduler | Probes all endpoints, writes to Firestore |
 | `GET /api/status` | Dashboard UI | Reads latest status from Firestore, sorted by `order` |
 | `GET /` | Browser | Static dashboard (HTML/JS) with auto-refresh every 60s |
