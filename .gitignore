@@ -2,6 +2,10 @@
 .env
 *-key.json
 
+# Korean docs (project is English-based)
+*-kor.md
+*-kor*
+
 # Python
 __pycache__/
 *.pyc
@@ -23,6 +27,9 @@ Thumbs.db
 .playwright-mcp/
 *.png
 dashboard-v1.png
+
+# AI agent artifacts
+.omo/
 
 # Firebase
 dashboard/firebase-debug.log

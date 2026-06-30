@@ -56,6 +56,9 @@ body {
 .toolbar-inner { max-width: 1200px; margin: 0 auto; padding: 0 16px; display: flex; justify-content: space-between; align-items: center; }
 h1 { font-size: 22px; font-weight: 600; display: flex; align-items: baseline; gap: 8px; }
 h1 span { color: var(--muted); font-weight: 400; font-size: 13px; }
+.header-links { display: flex; align-items: center; gap: 4px; }
+.header-links a { color: var(--muted); text-decoration: none; padding: 4px 6px; border-radius: 4px; display: flex; align-items: center; transition: color 0.2s, background 0.2s; }
+.header-links a:hover { color: var(--text); background: var(--border); }
 
 .theme-toggle {
   background: var(--card); border: 1px solid var(--border);
@@ -66,26 +69,25 @@ h1 span { color: var(--muted); font-weight: 400; font-size: 13px; }
 .theme-toggle:hover { border-color: var(--muted); }
 .theme-toggle .icon { font-size: 16px; }
 
-/* ── Summary Cards ──────────────────────────── */
-.summary { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin: 24px 0 28px; }
-.summary-card {
+/* ── Hero ──────────────────────────────────── */
+.hero {
+  margin: 24px 0 28px;
+  padding: 28px 24px;
   background: var(--card);
   border: 1px solid var(--border);
   border-radius: 8px;
-  padding: 20px;
-  text-align: center;
-  cursor: pointer;
-  transition: border-color 0.2s, transform 0.15s;
 }
-.summary-card:hover { border-color: var(--muted); transform: translateY(-1px); }
-.summary-card .count { font-size: 40px; font-weight: 700; line-height: 1; }
-.summary-card .label { font-size: 12px; color: var(--muted); margin-top: 6px; text-transform: uppercase; letter-spacing: 0.5px; }
-.summary-card.ok .count { color: var(--green); }
-.summary-card.degraded .count { color: var(--yellow); }
-.summary-card.down .count { color: var(--red); }
+.hero-title { font-size: 28px; font-weight: 700; margin-bottom: 12px; }
+.hero-categories { font-size: 14px; color: var(--blue); margin-bottom: 8px; font-weight: 500; }
+.hero-platforms { font-size: 13px; color: var(--text); margin-bottom: 8px; }
+.hero-tagline { font-size: 12px; color: var(--muted); }
+.header-status { font-size: 12px; margin-left: 6px; font-weight: 500; }
+.header-status .status-dot { margin-right: 3px; }
 
 /* ── Grid ───────────────────────────────────── */
 .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+.card-link-wrapper { text-decoration: none; color: inherit; display: block; }
+.card-link-wrapper:hover .card { border-color: var(--muted); box-shadow: 0 2px 8px rgba(0,0,0,0.15); }
 .card {
   background: var(--card);
   border: 1px solid var(--border);
@@ -102,11 +104,13 @@ h1 span { color: var(--muted); font-weight: 400; font-size: 13px; }
   border-radius: 10px; white-space: nowrap; text-transform: uppercase;
   flex-shrink: 0;
 }
-.badge.ok { background: var(--green-bg); color: var(--green); }
-.badge.degraded { background: var(--yellow-bg); color: var(--yellow); }
+.badge.live { background: var(--green-bg); color: var(--green); }
 .badge.down { background: var(--red-bg); color: var(--red); }
+.badge.star { background: var(--yellow-bg); color: var(--yellow); font-size: 10px; letter-spacing: 1px; }
+.badges-row { display: inline-flex; gap: 3px; align-items: center; }
 .card-body { margin-bottom: 10px; }
 .card-detail { font-size: 11px; color: var(--muted); }
+.card-muted { font-size: 10px; color: var(--muted); opacity: 0.6; }
 .card-footer { display: flex; justify-content: space-between; align-items: center; font-size: 11px; color: var(--muted); border-top: 1px solid var(--border); padding-top: 10px; }
 .card-link {
   color: var(--blue); text-decoration: none; font-weight: 500;
@@ -117,8 +121,7 @@ h1 span { color: var(--muted); font-weight: 400; font-size: 13px; }
 
 /* ── Status dot ──────────────────────────────── */
 .status-dot { display: inline-block; width: 6px; height: 6px; border-radius: 50%; margin-right: 4px; }
-.status-dot.ok { background: var(--green); }
-.status-dot.degraded { background: var(--yellow); }
+.status-dot.live { background: var(--green); }
 .status-dot.down { background: var(--red); }
 
 /* ── Category filter ────────────────────────── */
@@ -140,31 +143,50 @@ footer { text-align: center; padding: 28px 0; color: var(--muted); font-size: 12
 @media (max-width: 900px) {
   .grid { grid-template-columns: repeat(2, 1fr); }
 }
+.mobile-only { display: none; }
 @media (max-width: 600px) {
-  .grid, .summary { grid-template-columns: 1fr; }
+  .grid { grid-template-columns: 1fr; }
+  .hero-title { font-size: 22px; }
   h1 { font-size: 18px; }
   .container { padding: 16px 12px; }
+  .desktop-only { display: none; }
+  .mobile-only { display: inline; }
 }
 </style>
 </head>
 <body>
 <div class="toolbar">
   <div class="toolbar-inner">
-    <h1>TechCloudUp <span>19 projects</span></h1>
-    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">
-      <span class="icon" id="theme-icon">🌙</span> <span id="theme-label">Dark</span>
-    </button>
+    <h1>Wonhee <span class="desktop-only">19 projects</span><span class="mobile-only">19 proj.</span><span id="header-status" class="header-status"></span></h1>
+    <div class="header-links">
+      <a href="https://linkedin.com/in/scale600" target="_blank" rel="noopener" title="LinkedIn">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path fill-rule="evenodd" d="M0 1.146C0 .513.526 0 1.175 0h13.65C15.474 0 16 .513 16 1.146v13.708c0 .633-.526 1.146-1.175 1.146H1.175C.526 16 0 15.487 0 14.854V1.146zm4.943 12.248V6.169H2.542v7.225h2.401zm-1.2-8.212c.837 0 1.358-.554 1.358-1.248-.015-.709-.52-1.248-1.342-1.248-.822 0-1.359.54-1.359 1.248 0 .694.521 1.248 1.327 1.248h.016zm4.908 8.212V9.359c0-.216.016-.432.08-.586.173-.431.568-.878 1.232-.878.869 0 1.216.662 1.216 1.634v3.865h2.401V9.25c0-2.22-1.184-3.252-2.764-3.252-1.274 0-1.845.7-2.165 1.193v.025h-.016a5.54 5.54 0 01.016-.025V6.169h-2.4c.03.678 0 7.225 0 7.225h2.4z"/></svg>
+      </a>
+      <a href="https://github.com/scale600" target="_blank" rel="noopener" title="GitHub">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+      </a>
+      <a href="https://drive.google.com/drive/folders/1q5PhcbI-RwUncxa4j4kyJ2zuAHcc-r90?usp=sharing" target="_blank" rel="noopener" title="Resume">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path fill-rule="evenodd" d="M10.5 5a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0zm.061 3.073a4 4 0 10-5.123 0 6.004 6.004 0 00-3.431 5.142.75.75 0 001.498.07 4.5 4.5 0 018.99 0 .75.75 0 101.498-.07 6.005 6.005 0 00-3.432-5.142z"/></svg>
+      </a>
+<button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">
+          <span class="icon" id="theme-icon">🌙</span>
+      </button>
+    </div>
   </div>
 </div>
 <div class="container">
-  <div class="summary" id="summary"></div>
+  <div class="hero">
+    <div class="hero-title">Services Across Multi-Cloud, Self-Managed Production Infrastructure</div>
+    <div class="hero-categories">IAM Auditing · Private GKE · Cloudflare WAF · Suricata IDS · ERPNext · EspoCRM · IoT Core · Edge AI Detection</div>
+    <div class="hero-platforms">Terraform IaC · GitHub Actions CI/CD · Cloud Run · Firestore · n8n Automation</div>
+  </div>
   <div class="filters" id="filters"></div>
   <div class="grid" id="grid">
     <div class="loading pulse">Loading projects...</div>
   </div>
   <footer>
     Refreshed <span id="last-check">—</span> &middot; Auto-update every 60s
-    &middot; <a class="card-link" href="https://github.com/iviewio/project-techcloudup" target="_blank" rel="noopener">GitHub ↗</a>
+    &middot; <a class="card-link" href="https://github.com/scale600" target="_blank" rel="noopener">GitHub ↗</a>
   </footer>
 </div>
 
@@ -190,7 +212,6 @@ function toggleTheme() {
   const isDark = html.dataset.theme === 'dark';
   html.dataset.theme = isDark ? 'light' : 'dark';
   document.getElementById('theme-icon').textContent = isDark ? '☀️' : '🌙';
-  document.getElementById('theme-label').textContent = isDark ? 'Light' : 'Dark';
   localStorage.setItem('theme', isDark ? 'light' : 'dark');
 }
 
@@ -199,20 +220,25 @@ function toggleTheme() {
   const saved = localStorage.getItem('theme') || 'dark';
   document.documentElement.dataset.theme = saved;
   setTimeout(() => {
-    document.getElementById('theme-icon').textContent = saved === 'dark' ? '🌙' : '☀️';
-    document.getElementById('theme-label').textContent = saved === 'dark' ? 'Dark' : 'Light';
+  document.getElementById('theme-icon').textContent = saved === 'dark' ? '🌙' : '☀️';
   }, 10);
 })();
+
+function getCategories(p) {
+  const cat = p.category || 'other';
+  return Array.isArray(cat) ? cat : [cat];
+}
 
 function renderFilters(projects) {
   const categories = {};
   for (const [, p] of Object.entries(projects)) {
-    const cat = p.category || 'other';
-    if (!categories[cat]) categories[cat] = 0;
-    categories[cat]++;
+    for (const cat of getCategories(p)) {
+      if (!categories[cat]) categories[cat] = 0;
+      categories[cat]++;
+    }
   }
   let html = `<button class="filter-btn active" data-cat="all" onclick="setFilter('all')">All (19)</button>`;
-  const labels = { admin: 'Admin', ai: 'AI', security: 'Security', iot: 'IoT', app: 'Apps', automation: 'Automation' };
+  const labels = { admin: 'Admin', ai: 'AI', aws: 'AWS', azure: 'Azure', gcp: 'GCP', security: 'Security', iot: 'IoT', app: 'Apps', automation: 'Automation' };
   for (const [cat, count] of Object.entries(categories).sort()) {
     html += `<button class="filter-btn" data-cat="${cat}" onclick="setFilter('${cat}')">${labels[cat] || cat} (${count})</button>`;
   }
@@ -229,20 +255,15 @@ function render(data) {
   const { summary, projects, checked_at } = data;
   allProjects = projects || {};
 
-  // Summary
-  document.getElementById('summary').innerHTML = `
-    <div class="summary-card ok">
-      <div class="count">${summary.ok}</div>
-      <div class="label">Healthy</div>
-    </div>
-    <div class="summary-card degraded">
-      <div class="count">${summary.degraded}</div>
-      <div class="label">Degraded</div>
-    </div>
-    <div class="summary-card down">
-      <div class="count">${summary.down}</div>
-      <div class="label">Down</div>
-    </div>`;
+  // Header status
+  const hdr = document.getElementById('header-status');
+  if (!summary || (summary.live + summary.down) === 0) {
+    hdr.innerHTML = '';
+  } else if (summary.down === 0) {
+    hdr.innerHTML = `<span class="status-dot live"></span><span class="desktop-only">All </span>live`;
+  } else {
+    hdr.innerHTML = `<span class="status-dot live"></span>${summary.live} live · <span class="status-dot down"></span>${summary.down} down`;
+  }
 
   // Filters (only on first load)
   if (!document.getElementById('filters').innerHTML.trim()) {
@@ -261,7 +282,7 @@ function renderGrid(projects) {
   }
 
   const entries = Object.entries(projects).filter(([, p]) =>
-    activeFilter === 'all' || p.category === activeFilter
+    activeFilter === 'all' || getCategories(p).includes(activeFilter)
   );
 
   if (entries.length === 0) {
@@ -273,26 +294,25 @@ function renderGrid(projects) {
     const domain = p.url ? new URL(p.url).hostname : '';
     const siteUrl = p.url ? new URL(p.url).origin + '/' : '#';
     return `
+      <a href="${siteUrl}" target="_blank" rel="noopener" class="card-link-wrapper">
       <div class="card">
         <div class="card-header">
           <div>
             <div class="card-name">${p.name}</div>
             <div class="card-domain">${domain}</div>
           </div>
-          <span class="badge ${p.status}">${p.status}</span>
+          <span class="badges-row">${p.stars ? `<span class="badge star">${'★'.repeat(p.stars)}</span>` : ''}<span class="badge ${p.status}">${p.status}</span></span>
         </div>
         <div class="card-body">
-          <span class="card-detail"><span class="status-dot ${p.status}"></span>${p.label}</span>
+          <span class="card-detail"><span class="status-dot ${p.status}"></span>${p.source === 'root' ? '<span class="card-muted">root</span> ' : ''}${p.label}</span>
           ${p.response_ms ? `<span class="card-detail" style="margin-left:8px">${p.response_ms}ms</span>` : ''}
         </div>
         <div class="card-footer">
-          <a class="card-link" href="${siteUrl}" target="_blank" rel="noopener">
-            <svg viewBox="0 0 16 16" fill="currentColor"><path fill-rule="evenodd" d="M3.75 2h8.5c.966 0 1.75.784 1.75 1.75v8.5A1.75 1.75 0 0112.25 14h-2.5a.75.75 0 010-1.5h2.5a.25.25 0 00.25-.25v-8.5a.25.25 0 00-.25-.25h-8.5a.25.25 0 00-.25.25v2.5a.75.75 0 01-1.5 0v-2.5C1.75 2.784 2.784 2 3.75 2z"/><path fill-rule="evenodd" d="M9.03 7.03a.75.75 0 010 1.06l-5.47 5.47a.75.75 0 01-1.06-1.06l5.47-5.47a.75.75 0 011.06 0z"/></svg>
-            Visit
-          </a>
+          <span class="card-label">${domain}</span>
           <span>${timeAgo(p.checked_at)}</span>
         </div>
-      </div>`;
+      </div>
+      </a>`;
   }).join('');
 }
 

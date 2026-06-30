@@ -51,11 +51,11 @@ def _classify_status(http_code: int | None) -> tuple[str, str]:
     if http_code is None:
         return "down", "no response"
     if 200 <= http_code < 300:
-        return "ok", f"HTTP {http_code}"
+        return "live", f"HTTP {http_code}"
     if http_code in (401, 403):
-        return "ok", f"auth-gated (HTTP {http_code})"
+        return "live", f"auth-gated (HTTP {http_code})"
     if 400 <= http_code < 500:
-        return "degraded", f"client error (HTTP {http_code})"
+        return "down", f"client error (HTTP {http_code})"
     return "down", f"server error (HTTP {http_code})"
 
 
@@ -98,8 +98,9 @@ async def _check_one(client: httpx.AsyncClient, proj: dict) -> dict:
         root_code, root_ms = await _check_url(client, root)
         if root_code is not None and (200 <= root_code < 300 or root_code in (401, 403)):
             return {
-                "status": "degraded",
-                "label": f"no /api/health (root HTTP {root_code})",
+                "status": "live",
+                "label": "root only",
+                "source": "root",
                 "checked_at": ts,
                 "response_ms": root_ms,
             }
@@ -125,6 +126,8 @@ async def check_all() -> dict:
             result["name"] = proj["name"]
             result["url"] = proj["url"]
             result["category"] = proj["category"]
+            result["order"] = proj.get("order", 999)
+            result["stars"] = proj.get("stars", 0)
             results[pid] = result
 
             # Write to Firestore
@@ -135,6 +138,8 @@ async def check_all() -> dict:
                     "name": proj["name"],
                     "url": proj["url"],
                     "category": proj["category"],
+                    "order": proj.get("order", 999),
+                    "stars": proj.get("stars", 0),
                     **result,
                 })
             except Exception as exc:
@@ -142,8 +147,7 @@ async def check_all() -> dict:
 
     # Summary
     summary = {
-        "ok": sum(1 for r in results.values() if r["status"] == "ok"),
-        "degraded": sum(1 for r in results.values() if r["status"] == "degraded"),
+        "live": sum(1 for r in results.values() if r["status"] == "live"),
         "down": sum(1 for r in results.values() if r["status"] == "down"),
     }
 
@@ -171,10 +175,9 @@ async def route_status():
         projects[doc.id] = doc.to_dict()
 
     if not projects:
-        return {"checked_at": None, "summary": {"ok": 0, "degraded": 0, "down": 19}, "projects": {}}
+        return {"checked_at": None, "summary": {"live": 0, "down": 19}, "projects": {}}
 
-    ok = sum(1 for p in projects.values() if p.get("status") == "ok")
-    degraded = sum(1 for p in projects.values() if p.get("status") == "degraded")
+    live = sum(1 for p in projects.values() if p.get("status") == "live")
     down = sum(1 for p in projects.values() if p.get("status") == "down")
 
     # Use the most recent checked_at
@@ -183,15 +186,14 @@ async def route_status():
         default=None,
     )
 
-    # Sort by status: down first, then degraded, then ok
+    # Sort by `order` field from projects.json
     sorted_ids = sorted(projects.keys(), key=lambda pid: (
-        {"down": 0, "degraded": 1, "ok": 2}.get(projects[pid].get("status", "down"), 3),
-        pid,
+        projects[pid].get("order", 999),
     ))
 
     return {
         "checked_at": checked_at,
-        "summary": {"ok": ok, "degraded": degraded, "down": down},
+        "summary": {"live": live, "down": down},
         "projects": {pid: projects[pid] for pid in sorted_ids},
     }
 
