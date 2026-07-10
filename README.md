@@ -4,6 +4,8 @@ Multi-cloud production infrastructure dashboard — live health monitoring for s
 
 > **Live**: [project.techcloudup.com](https://project.techcloudup.com)
 
+![Dashboard Screenshot](assets/dashboard.png)
+
 ---
 
 ## Architecture
