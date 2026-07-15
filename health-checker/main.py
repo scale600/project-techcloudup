@@ -46,7 +46,7 @@ def _projects() -> list[dict]:
     return _projects_cache
 
 
-def _classify_status(http_code: int | None) -> tuple[str, str]:
+def _classify_status(http_code: int | None, body_size: int = 0) -> tuple[str, str]:
     """Return (status, label)."""
     if http_code is None:
         return "down", "no response"
@@ -54,23 +54,26 @@ def _classify_status(http_code: int | None) -> tuple[str, str]:
         return "live", f"HTTP {http_code}"
     if http_code in (401, 403):
         return "live", f"auth-gated (HTTP {http_code})"
+    if http_code == 404 and body_size > 500:
+        return "live", f"HTTP {http_code} (SPA)"
     if 400 <= http_code < 500:
         return "down", f"client error (HTTP {http_code})"
     return "down", f"server error (HTTP {http_code})"
 
 
 # ── Core logic ──────────────────────────────────────────────────────
-async def _check_url(client: httpx.AsyncClient, url: str) -> tuple[int | None, int]:
-    """Try fetching a URL. Return (status_code, elapsed_ms)."""
+async def _check_url(client: httpx.AsyncClient, url: str) -> tuple[int | None, int, int]:
+    """Try fetching a URL. Return (status_code, elapsed_ms, body_size)."""
     t0 = time.perf_counter()
     try:
         resp = await client.get(url, timeout=TIMEOUT)
         elapsed = int((time.perf_counter() - t0) * 1000)
-        return resp.status_code, elapsed
+        body_size = len(resp.content)
+        return resp.status_code, elapsed, body_size
     except httpx.TimeoutException:
-        return None, TIMEOUT * 1000
+        return None, TIMEOUT * 1000, 0
     except Exception:
-        return None, int((time.perf_counter() - t0) * 1000)
+        return None, int((time.perf_counter() - t0) * 1000), 0
 
 
 def _root_url(proj: dict) -> str:
@@ -87,16 +90,16 @@ async def _check_one(client: httpx.AsyncClient, proj: dict) -> dict:
     url = proj["url"]
 
     # 1. Try the health endpoint
-    code, response_ms = await _check_url(client, url)
-    if code is not None and (200 <= code < 300 or code in (401, 403)):
-        status, label = _classify_status(code)
+    code, response_ms, body_size = await _check_url(client, url)
+    if code is not None and (200 <= code < 300 or code in (401, 403) or (code == 404 and body_size > 500)):
+        status, label = _classify_status(code, body_size)
         return {"status": status, "label": label, "checked_at": ts, "response_ms": response_ms}
 
     # 2. Health endpoint failed — fall back to root URL
     root = _root_url(proj)
     if root != url:
-        root_code, root_ms = await _check_url(client, root)
-        if root_code is not None and (200 <= root_code < 300 or root_code in (401, 403)):
+        root_code, root_ms, root_body_size = await _check_url(client, root)
+        if root_code is not None and (200 <= root_code < 300 or root_code in (401, 403) or (root_code == 404 and root_body_size > 500)):
             return {
                 "status": "live",
                 "label": "root only",
@@ -106,7 +109,7 @@ async def _check_one(client: httpx.AsyncClient, proj: dict) -> dict:
             }
 
     # 3. Both failed — classify the original failure
-    status, label = _classify_status(code)
+    status, label = _classify_status(code, body_size)
     return {"status": status, "label": label, "checked_at": ts, "response_ms": response_ms}
 
 
@@ -121,6 +124,8 @@ async def check_all() -> dict:
         limits=httpx.Limits(max_connections=10),
     ) as client:
         for proj in projects:
+            if proj.get("active") is False:
+                continue
             pid = proj["id"]
             result = await _check_one(client, proj)
             result["name"] = proj["name"]
@@ -128,6 +133,7 @@ async def check_all() -> dict:
             result["category"] = proj["category"]
             result["order"] = proj.get("order", 999)
             result["stars"] = proj.get("stars", 0)
+            result["active"] = proj.get("active", True)
             results[pid] = result
 
             # Write to Firestore
@@ -140,6 +146,7 @@ async def check_all() -> dict:
                     "category": proj["category"],
                     "order": proj.get("order", 999),
                     "stars": proj.get("stars", 0),
+                    "active": proj.get("active", True),
                     **result,
                 })
             except Exception as exc:
@@ -169,10 +176,12 @@ async def route_check_all():
 @app.get("/api/status")
 async def route_status():
     """Read latest health from Firestore."""
+    inactive_ids = {p["id"] for p in _projects() if p.get("active") is False}
     docs = db.collection("health-checks").stream()
     projects = {}
     for doc in docs:
-        projects[doc.id] = doc.to_dict()
+        if doc.id not in inactive_ids:
+            projects[doc.id] = doc.to_dict()
 
     if not projects:
         return {"checked_at": None, "summary": {"live": 0, "down": 19}, "projects": {}}
