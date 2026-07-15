@@ -19,5 +19,6 @@
   {"id": "monica",       "name": "PRM - Monica",              "url": "https://monica.iviewio.com/api/health",        "category": "app",        "order": 18, "stars": 2, "active": false},
   {"id": "sns",          "name": "SNS Scheduler - Mixpost","url": "https://sns.iviewio.com/api/health",            "category": "app",        "order": 19, "stars": 2},
   {"id": "iviewtouch",   "name": "iViewTouch - Touchscreen Tech Blog", "url": "https://iviewtouch.com/wp-json/",      "category": "app",        "order": 20, "stars": 2},
+  {"id": "iviewio",      "name": "iViewIO - Industrial IoT Blog", "url": "https://iviewio.com/wp-json/",           "category": "app",        "order": 21, "stars": 2},
   {"id": "oc",           "name": "Orange County Infographics",   "url": "https://oc.techcloudup.com/api/health",       "category": "oci",        "order": 0,  "stars": 5}
 ]
