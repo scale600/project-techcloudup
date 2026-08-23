@@ -1,3 +1,4 @@
+import asyncio
 import json
 import logging
 import os
@@ -5,8 +6,15 @@ import time
 import traceback
 from datetime import datetime, timezone
 from pathlib import Path
+from urllib.parse import urlsplit
 
-import httpx
+from curl_cffi.requests import AsyncSession
+from curl_cffi.requests.exceptions import (
+    ConnectionError,
+    RequestException,
+    SSLError,
+    Timeout,
+)
 from firebase_admin import credentials, firestore, initialize_app
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
@@ -17,7 +25,14 @@ logger = logging.getLogger(__name__)
 
 # ── Config ──────────────────────────────────────────────────────────
 PROJECT_ID = os.environ["GCP_PROJECT"]  # project-8ea04b35-82af-4a8d-845
-TIMEOUT = 10  # seconds per health check
+TIMEOUT = 10  # seconds per attempt
+MAX_ATTEMPTS = 3  # total attempts per URL (1 try + 2 retries)
+RETRY_BACKOFF_BASE = 1.0  # seconds; exponential backoff: 1s, 2s, ...
+MAX_CONNECTIONS = 10  # concurrent probes
+DOWN_THRESHOLD = 3  # consecutive failures before a site flips to "down"
+# Impersonate a real browser's TLS fingerprint (JA3/JA4) so Cloudflare/CloudFront
+# bot protection stops dropping us at the handshake.
+IMPERSONATE = "chrome124"
 PROJECTS_FILE = Path(__file__).parent / "projects.json"
 
 # ── Firestore init ──────────────────────────────────────────────────
@@ -46,10 +61,15 @@ def _projects() -> list[dict]:
     return _projects_cache
 
 
-def _classify_status(http_code: int | None, body_size: int = 0) -> tuple[str, str]:
+def _classify_status(
+    http_code: int | None,
+    body_size: int = 0,
+    error_type: str | None = None,
+) -> tuple[str, str]:
     """Return (status, label)."""
     if http_code is None:
-        return "down", "no response"
+        label = f"no response ({error_type})" if error_type else "no response"
+        return "down", label
     if 200 <= http_code < 300:
         return "live", f"HTTP {http_code}"
     if http_code in (401, 403):
@@ -61,45 +81,86 @@ def _classify_status(http_code: int | None, body_size: int = 0) -> tuple[str, st
     return "down", f"server error (HTTP {http_code})"
 
 
+def _is_success(http_code: int | None, body_size: int = 0) -> bool:
+    """Whether a response means 'the site is reachable'."""
+    if http_code is None:
+        return False
+    return (
+        200 <= http_code < 300
+        or http_code in (401, 403)
+        or (http_code == 404 and body_size > 500)
+    )
+
+
 # ── Core logic ──────────────────────────────────────────────────────
-async def _check_url(client: httpx.AsyncClient, url: str) -> tuple[int | None, int, int]:
-    """Try fetching a URL. Return (status_code, elapsed_ms, body_size)."""
-    t0 = time.perf_counter()
-    try:
-        resp = await client.get(url, timeout=TIMEOUT)
-        elapsed = int((time.perf_counter() - t0) * 1000)
-        body_size = len(resp.content)
-        return resp.status_code, elapsed, body_size
-    except httpx.TimeoutException:
-        return None, TIMEOUT * 1000, 0
-    except Exception:
-        return None, int((time.perf_counter() - t0) * 1000), 0
+async def _check_url(
+    client: AsyncSession,
+    url: str,
+    attempts: int = MAX_ATTEMPTS,
+) -> tuple[int | None, int, int, str | None]:
+    """Fetch a URL with retries + exponential backoff.
+
+    Return (status_code, elapsed_ms, body_size, error_type).
+    """
+    error_type: str | None = None
+    last_elapsed = 0
+    for attempt in range(attempts):
+        t0 = time.perf_counter()
+        try:
+            resp = await client.get(url, timeout=TIMEOUT)
+            return (
+                resp.status_code,
+                int((time.perf_counter() - t0) * 1000),
+                len(resp.content),
+                None,
+            )
+        except Timeout as exc:
+            error_type = "timeout"
+            last_elapsed = int((time.perf_counter() - t0) * 1000)
+            logger.warning("attempt %d/%d timeout: %s (%s)", attempt + 1, attempts, url, exc)
+        except SSLError as exc:
+            error_type = "tls"
+            last_elapsed = int((time.perf_counter() - t0) * 1000)
+            logger.warning("attempt %d/%d tls error: %s (%s)", attempt + 1, attempts, url, exc)
+        except ConnectionError as exc:
+            error_type = "connect"
+            last_elapsed = int((time.perf_counter() - t0) * 1000)
+            logger.warning("attempt %d/%d connect error: %s (%s)", attempt + 1, attempts, url, exc)
+        except RequestException as exc:
+            error_type = "error"
+            last_elapsed = int((time.perf_counter() - t0) * 1000)
+            logger.warning("attempt %d/%d request error: %s (%r)", attempt + 1, attempts, url, exc)
+
+        if attempt < attempts - 1:
+            await asyncio.sleep(RETRY_BACKOFF_BASE * (2 ** attempt))
+
+    return None, last_elapsed, 0, error_type
 
 
 def _root_url(proj: dict) -> str:
     """Derive the root URL from the health endpoint URL."""
     try:
-        parsed = httpx.URL(proj["url"])
-        return f"{parsed.scheme}://{parsed.host}/"
+        parsed = urlsplit(proj["url"])
+        return f"{parsed.scheme}://{parsed.netloc}/"
     except Exception:
         return proj["url"]
 
 
-async def _check_one(client: httpx.AsyncClient, proj: dict) -> dict:
+async def _check_one(client: AsyncSession, proj: dict) -> dict:
     ts = datetime.now(timezone.utc).isoformat()
     url = proj["url"]
 
     # 1. Try the health endpoint
-    code, response_ms, body_size = await _check_url(client, url)
-    if code is not None and (200 <= code < 300 or code in (401, 403) or (code == 404 and body_size > 500)):
+    code, response_ms, body_size, error_type = await _check_url(client, url)
+    if _is_success(code, body_size):
         status, label = _classify_status(code, body_size)
         return {"status": status, "label": label, "checked_at": ts, "response_ms": response_ms}
 
     # 2. Health endpoint failed — fall back to root URL
     root = _root_url(proj)
     if root != url:
-        root_code, root_ms, root_body_size = await _check_url(client, root)
-        if root_code is not None and (200 <= root_code < 300 or root_code in (401, 403) or (root_code == 404 and root_body_size > 500)):
+        root_code, root_ms, root_body_size, _ = await _check_url(client, root)
+        if _is_success(root_code, root_body_size):
             return {
                 "status": "live",
                 "label": "root only",
@@ -109,48 +170,92 @@ async def _check_one(client: httpx.AsyncClient, proj: dict) -> dict:
             }
 
     # 3. Both failed — classify the original failure
-    status, label = _classify_status(code, body_size)
+    status, label = _classify_status(code, body_size, error_type)
     return {"status": status, "label": label, "checked_at": ts, "response_ms": response_ms}
 
 
+def _apply_debounce(pid: str, result: dict) -> None:
+    """Debounce DOWN transitions so a transient blip doesn't flip a site to "down".
+
+    Persists a consecutive-failure counter in Firestore; requires
+    DOWN_THRESHOLD failures in a row before the status actually becomes "down".
+    Recovery to "live" is instant.
+    """
+    doc_ref = db.collection("health-checks").document(pid)
+
+    if result["status"] == "live":
+        result["failures"] = 0
+        return
+
+    # result["status"] == "down"
+    try:
+        prev = doc_ref.get()
+    except Exception as exc:
+        logger.warning("Firestore read failed for %s during debounce: %s", pid, exc)
+        result["failures"] = 1
+        return
+
+    if not prev.exists:
+        # No history yet — trust the first check, start the failure counter.
+        result["failures"] = 1
+        return
+
+    data = prev.to_dict() or {}
+    prev_status = data.get("status", "live")
+    prev_failures = data.get("failures", 0)
+    failures = prev_failures + 1
+
+    if failures >= DOWN_THRESHOLD:
+        result["failures"] = failures
+        # status remains "down"
+    else:
+        # Not yet confirmed — keep the previous status (instant recovery bias).
+        result["status"] = prev_status if prev_status == "down" else "live"
+        result["failures"] = failures
+        result["label"] = f"{result.get('label', '')} · unconfirmed ({failures}/{DOWN_THRESHOLD})"
+
+
 async def check_all() -> dict:
-    projects = _projects()
-    results: dict[str, dict] = {}
+    projects = [p for p in _projects() if p.get("active") is not False]
     now = datetime.now(timezone.utc).isoformat()
+    results: dict[str, dict] = {}
 
-    async with httpx.AsyncClient(
-        verify=False,
-        follow_redirects=True,
-        limits=httpx.Limits(max_connections=10),
-    ) as client:
-        for proj in projects:
-            if proj.get("active") is False:
-                continue
-            pid = proj["id"]
-            result = await _check_one(client, proj)
-            result["name"] = proj["name"]
-            result["url"] = proj["url"]
-            result["category"] = proj["category"]
-            result["order"] = proj.get("order", 999)
-            result["stars"] = proj.get("stars", 0)
-            result["active"] = proj.get("active", True)
-            results[pid] = result
+    async with AsyncSession(impersonate=IMPERSONATE, allow_redirects=True) as client:
+        sem = asyncio.Semaphore(MAX_CONNECTIONS)
 
-            # Write to Firestore
-            try:
-                doc_ref = db.collection("health-checks").document(pid)
-                doc_ref.set({
-                    "id": pid,
-                    "name": proj["name"],
-                    "url": proj["url"],
-                    "category": proj["category"],
-                    "order": proj.get("order", 999),
-                    "stars": proj.get("stars", 0),
-                    "active": proj.get("active", True),
-                    **result,
-                })
-            except Exception as exc:
-                logger.error(f"Firestore write failed for {pid}: {exc}")
+        async def run(proj: dict) -> tuple[dict, dict]:
+            async with sem:
+                return proj, await _check_one(client, proj)
+
+        checked = await asyncio.gather(*(run(p) for p in projects))
+
+    for proj, result in checked:
+        pid = proj["id"]
+        result["name"] = proj["name"]
+        result["url"] = proj["url"]
+        result["category"] = proj["category"]
+        result["order"] = proj.get("order", 999)
+        result["stars"] = proj.get("stars", 0)
+        result["active"] = proj.get("active", True)
+
+        _apply_debounce(pid, result)
+        results[pid] = result
+
+        # Write to Firestore
+        try:
+            doc_ref = db.collection("health-checks").document(pid)
+            doc_ref.set({
+                "id": pid,
+                "name": proj["name"],
+                "url": proj["url"],
+                "category": proj["category"],
+                "order": proj.get("order", 999),
+                "stars": proj.get("stars", 0),
+                "active": proj.get("active", True),
+                **result,
+            })
+        except Exception as exc:
+            logger.error(f"Firestore write failed for {pid}: {exc}")
 
     # Summary
     summary = {
@@ -184,7 +289,7 @@ async def route_status():
             projects[doc.id] = doc.to_dict()
 
     if not projects:
-        return {"checked_at": None, "summary": {"live": 0, "down": 19}, "projects": {}}
+        return {"checked_at": None, "summary": {"live": 0, "down": 0}, "projects": {}}
 
     live = sum(1 for p in projects.values() if p.get("status") == "live")
     down = sum(1 for p in projects.values() if p.get("status") == "down")
