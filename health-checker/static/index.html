@@ -3,7 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>project.techcloudup.com</title>
+<title>p.techcloudup.com</title>
+<script src="https://java-redis.techcloudup.com/tracker.js" defer></script>
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 :root {
@@ -89,6 +90,7 @@ h1 span { color: var(--muted); font-weight: 400; font-size: 13px; }
 .card-link-wrapper { text-decoration: none; color: inherit; display: block; }
 .card-link-wrapper:hover .card { border-color: var(--muted); box-shadow: 0 2px 8px rgba(0,0,0,0.15); }
 .card {
+  position: relative;
   background: var(--card);
   border: 1px solid var(--border);
   border-radius: 8px;
@@ -119,6 +121,45 @@ h1 span { color: var(--muted); font-weight: 400; font-size: 13px; }
 .card-link:hover { text-decoration: underline; }
 .card-link svg { width: 12px; height: 12px; }
 
+/* ── Card tooltip ─────────────────────────────── */
+.card-tooltip {
+  position: absolute;
+  bottom: calc(100% + 10px);
+  left: 0;
+  right: 0;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 12px 14px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.35);
+  z-index: 30;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(4px);
+  transition: opacity 0.15s ease, transform 0.15s ease, visibility 0.15s;
+  pointer-events: none;
+  text-align: left;
+}
+.card-tooltip::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 24px;
+  border: 6px solid transparent;
+  border-top-color: var(--card);
+}
+.card-link-wrapper:hover .card-tooltip,
+.card-link-wrapper:focus-visible .card-tooltip,
+.card-link-wrapper:focus-within .card-tooltip {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+.card-tooltip-title { font-size: 12px; font-weight: 600; margin-bottom: 6px; }
+.card-tooltip-row { font-size: 11px; color: var(--muted); line-height: 1.45; }
+.card-tooltip-row + .card-tooltip-row { margin-top: 5px; }
+.card-tooltip-row b { color: var(--text); font-weight: 600; }
+
 /* ── Status dot ──────────────────────────────── */
 .status-dot { display: inline-block; width: 6px; height: 6px; border-radius: 50%; margin-right: 4px; }
 .status-dot.live { background: var(--green); }
@@ -132,6 +173,18 @@ h1 span { color: var(--muted); font-weight: 400; font-size: 13px; }
   font-size: 12px; cursor: pointer; transition: all 0.2s;
 }
 .filter-btn:hover, .filter-btn.active { color: var(--text); border-color: var(--blue); background: rgba(88,166,255,0.1); }
+
+/* ── Focus states ────────────────────────────── */
+a:focus-visible,
+button:focus-visible {
+  outline: 2px solid var(--blue);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+.card-link-wrapper:focus-visible .card {
+  border-color: var(--blue);
+  box-shadow: 0 0 0 2px rgba(88,166,255,0.4);
+}
 
 footer { text-align: center; padding: 28px 0; color: var(--muted); font-size: 12px; }
 .loading { text-align: center; padding: 60px 0; color: var(--muted); }
@@ -192,8 +245,13 @@ footer { text-align: center; padding: 28px 0; color: var(--muted); font-size: 12
 
 <script>
 const API = '/api/status';
+const categoryLabels = { admin: 'Admin', ai: 'AI', security: 'Security', automation: 'Automate', aws: 'AWS', gcp: 'GCP', azure: 'Azure', oci: 'OCI', iot: 'IoT', app: 'App' };
 let allProjects = {};
 let activeFilter = 'all';
+
+function esc(s) {
+  return String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+}
 
 function timeAgo(iso) {
   if (!iso) return '—';
@@ -215,13 +273,12 @@ function toggleTheme() {
   localStorage.setItem('theme', isDark ? 'light' : 'dark');
 }
 
-// Restore saved theme
+// Restore saved theme, falling back to system preference
 (function() {
-  const saved = localStorage.getItem('theme') || 'dark';
-  document.documentElement.dataset.theme = saved;
-  setTimeout(() => {
-  document.getElementById('theme-icon').textContent = saved === 'dark' ? '🌙' : '☀️';
-  }, 10);
+  const saved = localStorage.getItem('theme');
+  const theme = saved || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+  document.documentElement.dataset.theme = theme;
+  document.getElementById('theme-icon').textContent = theme === 'dark' ? '🌙' : '☀️';
 })();
 
 function getCategories(p) {
@@ -230,8 +287,7 @@ function getCategories(p) {
 }
 
 function renderFilters(projects) {
-  const labels = { admin: 'Admin', ai: 'AI', security: 'Security', automation: 'Automate', aws: 'AWS', gcp: 'GCP', azure: 'Azure', oci: 'OCI', iot: 'IoT', app: 'App' };
-  const order = Object.keys(labels); // insertion order defines display order
+  const order = Object.keys(categoryLabels); // insertion order defines display order
   // Count per category from actual projects
   const counts = {};
   for (const [, p] of Object.entries(projects)) {
@@ -239,11 +295,11 @@ function renderFilters(projects) {
       counts[cat] = (counts[cat] || 0) + 1;
     }
   }
-  let html = `<button class="filter-btn active" data-cat="all" onclick="setFilter('all')">All (${Object.keys(projects).length})</button>`;
+  let html = `<button type="button" class="filter-btn active" data-cat="all" aria-pressed="true" onclick="setFilter('all')">All (${Object.keys(projects).length})</button>`;
   for (const cat of order) {
     const count = counts[cat];
     if (count) {
-      html += `<button class="filter-btn" data-cat="${cat}" onclick="setFilter('${cat}')">${labels[cat] || cat} (${count})</button>`;
+      html += `<button type="button" class="filter-btn" data-cat="${cat}" aria-pressed="false" onclick="setFilter('${cat}')">${categoryLabels[cat] || cat} (${count})</button>`;
     }
   }
   document.getElementById('filters').innerHTML = html;
@@ -251,7 +307,11 @@ function renderFilters(projects) {
 
 function setFilter(cat) {
   activeFilter = cat;
-  document.querySelectorAll('.filter-btn').forEach(b => b.classList.toggle('active', b.dataset.cat === cat));
+  document.querySelectorAll('.filter-btn').forEach(b => {
+    const isActive = b.dataset.cat === cat;
+    b.classList.toggle('active', isActive);
+    b.setAttribute('aria-pressed', String(isActive));
+  });
   renderGrid(allProjects);
 }
 
@@ -300,9 +360,17 @@ function renderGrid(projects) {
   grid.innerHTML = entries.map(([, p]) => {
     const domain = p.url ? new URL(p.url).hostname : '';
     const siteUrl = p.url ? new URL(p.url).origin + '/' : '#';
+    const d = p.description;
+    const tooltip = d ? `
+      <div class="card-tooltip">
+        <div class="card-tooltip-title">${esc(d.subtitle)}</div>
+        <div class="card-tooltip-row"><b>Purpose:</b> ${esc(d.purpose)}</div>
+        <div class="card-tooltip-row"><b>Core Tech:</b> ${esc(d.tech)}</div>
+      </div>` : '';
     return `
       <a href="${siteUrl}" target="_blank" rel="noopener" class="card-link-wrapper">
       <div class="card">
+        ${tooltip}
         <div class="card-header">
           <div>
             <div class="card-name">${p.name}</div>
@@ -315,7 +383,7 @@ function renderGrid(projects) {
           ${p.response_ms ? `<span class="card-detail" style="margin-left:8px">${p.response_ms}ms</span>` : ''}
         </div>
         <div class="card-footer">
-          <span class="card-label">${domain}</span>
+          <span class="card-label">${getCategories(p).map(c => categoryLabels[c] || c).join(' · ')}</span>
           <span>${timeAgo(p.checked_at)}</span>
         </div>
       </div>
