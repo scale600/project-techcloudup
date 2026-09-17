@@ -20,6 +20,8 @@
   --red: #f85149;
   --red-bg: rgba(248,81,73,0.15);
   --blue: #58a6ff;
+  --tooltip-bg: #0e2a4a;
+  --tooltip-border: #58a6ff;
   --header-bg: rgba(13,17,23,0.85);
 }
 [data-theme="light"] {
@@ -35,6 +37,8 @@
   --red: #cf222e;
   --red-bg: rgba(207,34,46,0.12);
   --blue: #0969da;
+  --tooltip-bg: #e8f1ff;
+  --tooltip-border: #0969da;
   --header-bg: rgba(255,255,255,0.85);
 }
 body {
@@ -127,8 +131,8 @@ h1 span { color: var(--muted); font-weight: 400; font-size: 13px; }
   bottom: calc(100% + 10px);
   left: 0;
   right: 0;
-  background: var(--card);
-  border: 1px solid var(--border);
+  background: var(--tooltip-bg);
+  border: 1px solid var(--tooltip-border);
   border-radius: 8px;
   padding: 12px 14px;
   box-shadow: 0 8px 24px rgba(0,0,0,0.35);
@@ -146,7 +150,7 @@ h1 span { color: var(--muted); font-weight: 400; font-size: 13px; }
   top: 100%;
   left: 24px;
   border: 6px solid transparent;
-  border-top-color: var(--card);
+  border-top-color: var(--tooltip-bg);
 }
 .card-link-wrapper:hover .card-tooltip,
 .card-link-wrapper:focus-visible .card-tooltip,
