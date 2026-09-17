@@ -1,8 +1,8 @@
-# project.techcloudup.com
+# p.techcloudup.com
 
 Multi-cloud production infrastructure dashboard — live health monitoring for services across AWS, GCP, and Azure.
 
-> **Live**: [project.techcloudup.com](https://project.techcloudup.com)
+> **Live**: [p.techcloudup.com](https://p.techcloudup.com) · (old: `project.techcloudup.com` → 301 redirect)
 
 ![Dashboard Screenshot](assets/dashboard.png)
 

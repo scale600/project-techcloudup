@@ -1,8 +1,8 @@
-# project.techcloudup.com
+# p.techcloudup.com
 
 19 live project dashboards. Self-managed via Terraform + GitHub Actions on AWS/GCP/Netlify/Cloudflare.
 
-> The meta dashboard (`project.techcloudup.com`) is built on GCP Cloud Run + Cloud Scheduler + Firestore. Project: `project-8ea04b35-82af-4a8d-845`
+> The meta dashboard (`p.techcloudup.com`, formerly `project.techcloudup.com`) is built on GCP Cloud Run + Cloud Scheduler + Firestore. Project: `project-8ea04b35-82af-4a8d-845`
 
 ---
 
