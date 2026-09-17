@@ -291,6 +291,16 @@ async def route_status():
     if not projects:
         return {"checked_at": None, "summary": {"live": 0, "down": 0}, "projects": {}}
 
+    # Attach static project metadata (e.g. description) from projects.json
+    descriptions = {
+        p["id"]: p.get("description")
+        for p in _projects()
+        if p.get("description")
+    }
+    for pid, desc in descriptions.items():
+        if pid in projects:
+            projects[pid]["description"] = desc
+
     live = sum(1 for p in projects.values() if p.get("status") == "live")
     down = sum(1 for p in projects.values() if p.get("status") == "down")
 

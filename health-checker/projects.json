@@ -1,24 +1,234 @@
 [
-  {"id": "aws",          "name": "AWS IAM Secure Access Hub",           "url": "https://aws.techcloudup.com/api/health",       "category": "aws",        "order": 1,  "stars": 5},
-  {"id": "gcp-gke",      "name": "GCP Kubernetes GKE Demo",         "url": "https://gcp-gke.techcloudup.com/api/health",   "category": "gcp",        "order": 2,  "stars": 5},
-  {"id": "dba-azure",    "name": "Azure BI with API/DBA",        "url": "https://dba-azure.techcloudup.com/api/health", "category": "azure",      "order": 3,  "stars": 5},
-  {"id": "ids",          "name": "IDS Suricata Security",  "url": "https://ids.techcloudup.com/api/health",       "category": ["security", "gcp", "automation"],   "order": 4,  "stars": 4},
-  {"id": "takedown",     "name": "Phishing Investigator",   "url": "https://takedown.techcloudup.com/api/health",  "category": ["security", "gcp"],   "order": 5,  "stars": 4},
-  {"id": "ai-agent",     "name": "GCP IAM Audit Agent",     "url": "https://ai-agent.techcloudup.com/api/health",  "category": ["ai", "gcp"], "order": 6,  "stars": 4},
-  {"id": "ai-kiosk1",    "name": "Edge AI Object Detection","url": "https://ai.kiosk1.iviewio.com/",                "category": ["ai", "gcp"],         "order": 7,  "stars": 3},
-  {"id": "ai-kbeathub",  "name": "K-Drama AI Recommender",  "url": "https://ai.kbeathub.com/healthz",              "category": ["ai", "gcp"],         "order": 8,  "stars": 3},
-  {"id": "waf",          "name": "WAF Demo on CloudFlare",     "url": "https://waf.techcloudup.com/api/health",       "category": ["security", "gcp"],   "order": 9,  "stars": 4},
-  {"id": "dashboard",    "name": "AWS IoT Core Dashboard",  "url": "https://dashboard.iviewio.com/api/health",     "category": ["iot", "aws"],        "order": 10, "stars": 3},
-  {"id": "kiosk1",       "name": "IoT Kiosk Server",        "url": "https://kiosk1.iviewio.com/health",            "category": ["iot", "gcp"],        "order": 11, "stars": 3},
-  {"id": "hanrecipe",    "name": "Recipe Mobile WebApp",    "url": "https://hanrecipe.kbeathub.com/",              "category": "app",        "order": 12, "stars": 2},
-  {"id": "n8n",          "name": "n8n Automation",           "url": "https://n8n.techcloudup.com/healthz",          "category": "automation",  "order": 13, "stars": 4},
-  {"id": "techcloudup",  "name": "AI Automated Tech Blog",   "url": "https://techcloudup.com/wp-json/",              "category": ["app", "automation"],        "order": 14, "stars": 2},
-  {"id": "erp",          "name": "ERP - ERPNext",             "url": "https://erp.iviewio.com/api/method/ping",       "category": "app",        "order": 15, "stars": 3},
-  {"id": "crm",          "name": "CRM - EspoCRM",                 "url": "https://crm.iviewio.com/api/v1/",               "category": "app",        "order": 16, "stars": 3},
-  {"id": "emailm",       "name": "Mailing system - Listmonk",        "url": "https://emailm.iviewio.com/api/health",        "category": "app",        "order": 17, "stars": 2},
-  {"id": "monica",       "name": "PRM - Monica",              "url": "https://monica.iviewio.com/api/health",        "category": "app",        "order": 18, "stars": 2, "active": false},
-  {"id": "sns",          "name": "SNS Scheduler - Mixpost","url": "https://sns.iviewio.com/api/health",            "category": "app",        "order": 19, "stars": 2},
-  {"id": "iviewtouch",   "name": "iViewTouch - Touchscreen Tech Blog", "url": "https://iviewtouch.com/wp-json/",      "category": "app",        "order": 20, "stars": 2},
-  {"id": "iviewio",      "name": "iViewIO - Industrial IoT Blog", "url": "https://iviewio.com/wp-json/",           "category": "app",        "order": 21, "stars": 2},
-  {"id": "oc",           "name": "Orange County Infographics",   "url": "https://oc.techcloudup.com/api/health",       "category": "oci",        "order": 0,  "stars": 5}
+  {
+    "id": "aws",
+    "name": "AWS IAM Secure Access Hub",
+    "url": "https://aws.techcloudup.com/api/health",
+    "category": "aws",
+    "order": 1,
+    "stars": 5,
+    "description": {
+      "subtitle": "AWS Ops Hub",
+      "purpose": "Provide a centralized security & operations dashboard for AWS admins to audit IAM policies, manage EC2 instances, and detect anomalies.",
+      "tech": "AWS (Lambda, S3, CloudTrail, CloudWatch, IAM), Python (Boto3), Terraform"
+    }
+  },
+  {
+    "id": "gcp-gke",
+    "name": "GCP Kubernetes GKE Demo",
+    "url": "https://gcp-gke.techcloudup.com/api/health",
+    "category": "gcp",
+    "order": 2,
+    "stars": 5,
+    "description": {
+      "subtitle": "GKE Private Cluster",
+      "purpose": "Demonstrate enterprise-grade Kubernetes provisioning with full CI/CD, WAF protection, observability, and disaster recovery.",
+      "tech": "Terraform, GCP (GKE, Cloud Armor), GitHub Actions (WIF), Grafana, Velero (DR)"
+    }
+  },
+  {
+    "id": "dba-azure",
+    "name": "Azure BI with API/DBA",
+    "url": "https://dba-azure.techcloudup.com/api/health",
+    "category": "azure",
+    "order": 3,
+    "stars": 5,
+    "description": {
+      "subtitle": "Azure Integration Lab",
+      "purpose": "Showcase full-stack Azure integration from serverless API to database to business intelligence visualization.",
+      "tech": "Azure Functions (REST API), Azure SQL Database, Power BI, Azure Key Vault, Application Insights"
+    }
+  },
+  {
+    "id": "ids",
+    "name": "IDS Suricata Security",
+    "url": "https://ids.techcloudup.com/api/health",
+    "category": ["security", "gcp", "automation"],
+    "order": 4,
+    "stars": 4,
+    "description": {
+      "subtitle": "Real-Time IDS Alerting",
+      "purpose": "Build a low-cost, real-time network intrusion detection system that parses Suricata logs and delivers instant alerts via a web dashboard.",
+      "tech": "Suricata (eve.json), n8n (workflow automation), Flask (Python API), GCP Compute Engine"
+    }
+  },
+  {
+    "id": "takedown",
+    "name": "Phishing Investigator",
+    "url": "https://takedown.techcloudup.com/api/health",
+    "category": ["security", "gcp"],
+    "order": 5,
+    "stars": 4,
+    "description": {
+      "subtitle": "Phishing Takedown Tool",
+      "purpose": "Automate the investigation of suspicious domains (DNS/WHOIS/SSL) to quickly gather evidence for phishing takedown requests.",
+      "tech": "Flask (Python SSE), Bash scripting (dig, whois, openssl), GCP"
+    }
+  },
+  {
+    "id": "ai-agent",
+    "name": "GCP IAM Audit Agent",
+    "url": "https://ai-agent.techcloudup.com/api/health",
+    "category": ["ai", "gcp"],
+    "order": 6,
+    "stars": 4
+  },
+  {
+    "id": "ai-kiosk1",
+    "name": "Edge AI Object Detection",
+    "url": "https://ai.kiosk1.iviewio.com/",
+    "category": ["ai", "gcp"],
+    "order": 7,
+    "stars": 3,
+    "description": {
+      "subtitle": "Zero-cost Edge AI (Object Detection in Browser)",
+      "purpose": "Implement browser-based object detection using Transformers.js and DETR ONNX, leveraging WebGPU and WASM for high performance, all hosted on Netlify at no cost.",
+      "tech": "Netlify, Transformers.js, DETR ONNX, WebGPU, WASM"
+    }
+  },
+  {
+    "id": "ai-kbeathub",
+    "name": "K-Drama AI Recommender",
+    "url": "https://ai.kbeathub.com/healthz",
+    "category": ["ai", "gcp"],
+    "order": 8,
+    "stars": 3,
+    "description": {
+      "subtitle": "AI-powered K-Drama Recommendation Engine",
+      "purpose": "Build a recommendation engine for Korean dramas using Streamlit, the Groq API with Llama models, and hosted on GCP.",
+      "tech": "Streamlit, Groq API (llama), GCP"
+    }
+  },
+  {
+    "id": "waf",
+    "name": "WAF Demo on CloudFlare",
+    "url": "https://waf.techcloudup.com/api/health",
+    "category": ["security", "gcp"],
+    "order": 9,
+    "stars": 4,
+    "description": {
+      "subtitle": "Real-time SQLi/XSS Blocking Demo",
+      "purpose": "Demonstrate real-time blocking of SQL injection and cross-site scripting attacks using Cloudflare WAF with custom rules and URL decoding, with traffic proxied to a GCP VM running Nginx and a Flask application.",
+      "tech": "Cloudflare WAF (custom rules, url_decode), GCP VM, Nginx, Flask"
+    }
+  },
+  {
+    "id": "dashboard",
+    "name": "AWS IoT Core Dashboard",
+    "url": "https://dashboard.iviewio.com/api/health",
+    "category": ["iot", "aws"],
+    "order": 10,
+    "stars": 3,
+    "description": {
+      "subtitle": "AWS IoT Core",
+      "purpose": "Provide an end-to-end IoT solution using AWS IoT Core, including secure device communication via MQTT/mTLS, OTA updates, device shadow state management, job scheduling, a serverless backend with Lambda and API Gateway, DynamoDB for data storage, CloudFront for content delivery, infrastructure as code with Terraform, CI/CD via GitHub Actions, audit logging, and compliance with ISO 21434.",
+      "tech": "AWS IoT Core, MQTT, mTLS, OTA, Device Shadow, Jobs, Lambda, API Gateway, DynamoDB, CloudFront, Terraform, GitHub Actions, audit logging, ISO 21434"
+    }
+  },
+  {
+    "id": "kiosk1",
+    "name": "IoT Kiosk Server",
+    "url": "https://kiosk1.iviewio.com/health",
+    "category": ["iot", "gcp"],
+    "order": 11,
+    "stars": 3,
+    "description": {
+      "subtitle": "IoT Kiosk Web Server",
+      "purpose": "Host a web-based kiosk interface for IoT devices, built with Blazor Server and MudBlazor UI, deployed on GCP with Caddy TLS termination.",
+      "tech": "GCP, Blazor Server, MudBlazor UI, Caddy TLS"
+    }
+  },
+  {
+    "id": "hanrecipe",
+    "name": "Recipe Mobile WebApp",
+    "url": "https://hanrecipe.kbeathub.com/",
+    "category": "app",
+    "order": 12,
+    "stars": 2,
+    "description": {
+      "subtitle": "Korean Recipe WebApp",
+      "purpose": "Develop a web application for Korean recipes using Flutter for the frontend, Firebase Firestore for database, Riverpod for state management, and Google Authentication for user login.",
+      "tech": "Flutter WebApp, Firebase (Firestore), Riverpod, Google Auth"
+    }
+  },
+  {
+    "id": "n8n",
+    "name": "n8n Automation",
+    "url": "https://n8n.techcloudup.com/healthz",
+    "category": "automation",
+    "order": 13,
+    "stars": 4
+  },
+  {
+    "id": "techcloudup",
+    "name": "AI Automated Tech Blog",
+    "url": "https://techcloudup.com/wp-json/",
+    "category": ["app", "automation"],
+    "order": 14,
+    "stars": 2
+  },
+  {
+    "id": "erp",
+    "name": "ERP - ERPNext",
+    "url": "https://erp.iviewio.com/api/method/ping",
+    "category": "app",
+    "order": 15,
+    "stars": 3
+  },
+  {
+    "id": "crm",
+    "name": "CRM - EspoCRM",
+    "url": "https://crm.iviewio.com/api/v1/",
+    "category": "app",
+    "order": 16,
+    "stars": 3
+  },
+  {
+    "id": "emailm",
+    "name": "Mailing system - Listmonk",
+    "url": "https://emailm.iviewio.com/api/health",
+    "category": "app",
+    "order": 17,
+    "stars": 2
+  },
+  {
+    "id": "monica",
+    "name": "PRM - Monica",
+    "url": "https://monica.iviewio.com/api/health",
+    "category": "app",
+    "order": 18,
+    "stars": 2,
+    "active": false
+  },
+  {
+    "id": "sns",
+    "name": "SNS Scheduler - Mixpost",
+    "url": "https://sns.iviewio.com/api/health",
+    "category": "app",
+    "order": 19,
+    "stars": 2
+  },
+  {
+    "id": "iviewtouch",
+    "name": "iViewTouch - Touchscreen Tech Blog",
+    "url": "https://iviewtouch.com/wp-json/",
+    "category": "app",
+    "order": 20,
+    "stars": 2
+  },
+  {
+    "id": "iviewio",
+    "name": "iViewIO - Industrial IoT Blog",
+    "url": "https://iviewio.com/wp-json/",
+    "category": "app",
+    "order": 21,
+    "stars": 2
+  },
+  {
+    "id": "oc",
+    "name": "Orange County Infographics",
+    "url": "https://oc.techcloudup.com/api/health",
+    "category": "oci",
+    "order": 0,
+    "stars": 5
+  }
 ]
