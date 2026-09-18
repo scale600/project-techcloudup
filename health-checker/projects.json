@@ -230,5 +230,29 @@
     "category": "oci",
     "order": 0,
     "stars": 5
+  },
+  {
+    "id": "azure-sql-ev",
+    "name": "Azure SQL Database",
+    "url": "https://azure-sql-ev.techcloudup.com/",
+    "category": "azure",
+    "order": 22,
+    "stars": 4
+  },
+  {
+    "id": "azure-arc-hybrid",
+    "name": "Azure Arc Hybrid Cloud",
+    "url": "https://azure-arc-hybrid.techcloudup.com/",
+    "category": "azure",
+    "order": 23,
+    "stars": 4
+  },
+  {
+    "id": "java-redis",
+    "name": "Java Redis Service",
+    "url": "https://java-redis.techcloudup.com/",
+    "category": "app",
+    "order": 24,
+    "stars": 3
   }
 ]
