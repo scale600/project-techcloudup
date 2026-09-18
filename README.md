@@ -95,18 +95,31 @@ terraform/
 
 ## Deployment
 
+Two ways to deploy — **local Docker** or **web (Cloud Build)**. See [docker-deployment.md](docker-deployment.md) for the full comparison.
+
+### Local Docker
+
 ```bash
 cd health-checker
 
 # Build & push
-docker build --platform linux/amd64 -t <registry>/health-checker:latest .
-docker push <registry>/health-checker:latest
+docker build --platform linux/amd64 -t us-central1-docker.pkg.dev/<project>/health-checker/health-checker:latest .
+docker push us-central1-docker.pkg.dev/<project>/health-checker/health-checker:latest
 
 # Deploy
 gcloud run deploy health-checker \
   --region=us-central1 \
-  --image=<registry>/health-checker:latest \
+  --image=us-central1-docker.pkg.dev/<project>/health-checker/health-checker:latest \
   --project=<project-id>
+```
+
+### Web (Cloud Build)
+
+```bash
+gcloud builds submit \
+  --config=cloudbuild.yaml \
+  --region=us-central1 \
+  --project=<project-id> .
 ```
 
 The health-checker picks up `projects.json` at container start — no environment variable changes needed when adding/updating monitored endpoints.
