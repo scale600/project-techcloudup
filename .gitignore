@@ -27,9 +27,13 @@ Thumbs.db
 .playwright-mcp/
 *.png
 dashboard-v1.png
+# Favicon asset (exception to *.png)
+!health-checker/static/apple-touch-icon.png
 
 # AI agent artifacts
 .omo/
+ui-improvements.md
+token-efficiency.md
 
 # Firebase
 dashboard/firebase-debug.log
