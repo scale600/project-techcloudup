@@ -1,6 +1,6 @@
 # p.techcloudup.com
 
-19 live project dashboards. Self-managed via Terraform + GitHub Actions on AWS/GCP/Netlify/Cloudflare.
+22 live project dashboards. Self-managed via Terraform + GitHub Actions on AWS/GCP/Azure/OCI/Netlify/Cloudflare.
 
 > The meta dashboard (`p.techcloudup.com`, formerly `project.techcloudup.com`) is built on GCP Cloud Run + Cloud Scheduler + Firestore. Project: `project-8ea04b35-82af-4a8d-845`
 
@@ -15,32 +15,35 @@
 | 1 | **aws.techcloudup.com** | AWS Cloud Admin hub: IAM least-privilege generator, EC2 start/stop, S3 security audit, CloudTrail/CloudWatch dashboard, LIVE/DEMO split |
 | 2 | **gcp-gke.techcloudup.com** | GCP Private GKE cluster: Terraform → GKE + Cloud Armor → GitHub Actions WIF → Grafana observability + Velero DR |
 | 3 | **dba-azure.techcloudup.com** | DBA/API/BI Lab: CMS Public API, Azure Function App, Azure SQL Database, Custom REST API + Power BI, Key Vault, Application Insights |
-| 4 | **ai-agent.techcloudup.com** | GCP IAM Audit Agent: Google ADK 2.2 + Gemini 2.5 Flash on Vertex AI, ReAct multi-agent, Streamlit UI → Cloud Run |
-| 5 | **waf.techcloudup.com** | Real-time SQLi/XSS blocking demo: Cloudflare WAF (custom rule + url_decode) → GCP VM (Nginx + Flask) |
-| 6 | **ids.techcloudup.com** | Live IDS dashboard: Suricata (eve.json) → cron forwarder → n8n → Flask API → real-time alerts |
-| 7 | **takedown.techcloudup.com** | Phishing domain investigator: browser form → Flask SSE → investigate.sh (DNS/WHOIS/SSL/HTTP) → real-time terminal stream + ZIP download |
+| 4 | **azure-sql-ev.techcloudup.com** | EV Registration SQL Playground: interactive read-only SQL query dashboard over WA state EV data — Socrata → Azure SQL star schema → serverless API + React playground |
+| 5 | **azure-arc-hybrid.techcloudup.com** | Arc Hybrid Governance Lab: 2 on-prem Ubuntu servers → Azure Arc + patching/compliance/tagging/RBAC (free Azure services) → CI-refreshed dashboard |
+| 6 | **oc.techcloudup.com** | Orange County Public Data Platform: choropleth maps, city comparisons, correlation & time-series — Next.js 16 static on OCI Always Free |
+| 7 | **ai-agent.techcloudup.com** | GCP IAM Audit Agent: Google ADK 2.2 + Gemini 2.5 Flash, ReAct Supervisor → real GCP APIs, risk reports. Decommissioned → static Streamlit portfolio |
+| 8 | **waf.techcloudup.com** | Real-time SQLi/XSS blocking demo: Cloudflare WAF (custom rule + url_decode) → GCP VM (Nginx + Flask) |
+| 9 | **ids.techcloudup.com** | Live IDS dashboard: Suricata (eve.json) → cron forwarder → n8n → Flask API → real-time alerts |
+| 10 | **takedown.techcloudup.com** | Phishing domain investigator: browser form → Flask SSE → investigate.sh (DNS/WHOIS/SSL/HTTP) → real-time terminal stream + ZIP download |
 
 ### Cloud / Automation / ERP / CRM
 
 | # | Project | Description |
 |---|---|---|
-| 8 | **dashboard.iviewio.com** | AWS IoT Core: MQTT/mTLS, OTA, Device Shadow, Jobs, Lambda, API Gateway, DynamoDB, CloudFront, ISO 21434 |
-| 9 | **n8n.techcloudup.com** | Self-hosted n8n automation on GCP: Groq Llama, Tavily, Google Sheets trigger → auto-publishes to 9 WordPress sites |
-| 10 | **techcloudup.com** | Cloud technology blog: AI-driven automated post WordPress, Nginx, PHP-FPM, GCP, Cloudflare CDN |
-| 11 | **erp.iviewio.com** | ERP on GCP: ERPNext (Frappe), Debian, MariaDB, Redis, Node.js, Nginx, Supervisor, Let's Encrypt SSL |
-| 12 | **crm.iviewio.com** | CRM on GCP: EspoCRM, Ubuntu, MariaDB, PHP, Nginx, Let's Encrypt SSL |
-| 13 | **emailm.iviewio.com** | Listmonk mailing service on GCP: Docker Compose, PostgreSQL 17, 2GB swap |
-| 14 | **sns.iviewio.com** | Mixpost Lite on GCP: Docker Compose (Traefik + MySQL + Redis), HTTPS |
-| 15 | **monica.iviewio.com** | Self-hosted Monica PRM on GCP: Docker, MariaDB, Caddy, Let's Encrypt TLS |
+| 11 | **dashboard.iviewio.com** | AWS IoT Core: MQTT/mTLS, OTA, Device Shadow, Jobs, Lambda, API Gateway, DynamoDB, CloudFront, ISO 21434 |
+| 12 | **n8n.techcloudup.com** | Self-hosted n8n automation on GCP: Groq Llama, Tavily, Google Sheets trigger → auto-publishes to 9 WordPress sites |
+| 13 | **techcloudup.com** | Cloud technology blog: AI-driven automated post WordPress, Nginx, PHP-FPM, GCP, Cloudflare CDN |
+| 14 | **erp.iviewio.com** | ERP on GCP: ERPNext (Frappe), Debian, MariaDB, Redis, Node.js, Nginx, Supervisor, Let's Encrypt SSL |
+| 15 | **crm.iviewio.com** | CRM on GCP: EspoCRM, Ubuntu, MariaDB, PHP, Nginx, Let's Encrypt SSL |
+| 16 | **emailm.iviewio.com** | Listmonk mailing service on GCP: Docker Compose, PostgreSQL 17, 2GB swap |
+| 17 | **sns.iviewio.com** | Mixpost Lite on GCP: Docker Compose (Traefik + MySQL + Redis), HTTPS |
+| 18 | **monica.iviewio.com** | Self-hosted Monica PRM on GCP: Docker, MariaDB, Caddy, Let's Encrypt TLS |
 
 ### Web, IoT, AI
 
 | # | Project | Description |
 |---|---|---|
-| 16 | **kiosk1.iviewio.com/kiosk** | IoT Kiosk web server: GCP, Blazor Server, MudBlazor UI, Caddy TLS |
-| 17 | **ai.kiosk1.iviewio.com** | Zero-cost Edge AI (object detection in browser): Netlify, Transformers.js, DETR ONNX, WebGPU/WASM |
-| 18 | **ai.kbeathub.com** | Edge AI-powered K-Drama recommendation engine: Streamlit, Groq API (llama), GCP |
-| 19 | **hanrecipe.kbeathub.com** | Mobile WebApp - Recipe app with authentication: Flutter, Firebase (Firestore), Riverpod, Google Auth |
+| 19 | **kiosk1.iviewio.com/kiosk** | IoT Kiosk web server: GCP, Blazor Server, MudBlazor UI, Caddy TLS |
+| 20 | **ai.kiosk1.iviewio.com** | Zero-cost Edge AI (object detection in browser): Netlify, Transformers.js, DETR ONNX, WebGPU/WASM |
+| 21 | **ai.kbeathub.com** | Edge AI-powered K-Drama recommendation engine: Streamlit, Groq API (llama), GCP |
+| 22 | **hanrecipe.kbeathub.com** | Mobile WebApp - Recipe app with authentication: Flutter, Firebase (Firestore), Riverpod, Google Auth |
 
 ---
 

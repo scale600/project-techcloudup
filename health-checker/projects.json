@@ -80,7 +80,12 @@
       "gcp"
     ],
     "order": 9,
-    "stars": 4
+    "stars": 4,
+    "description": {
+      "subtitle": "GCP IAM Security Audit Agent",
+      "purpose": "Agentic AI demo automating Google Cloud IAM security audits — natural-language requests routed through a ReAct Supervisor Agent to real GCP APIs to detect overprivileged accounts and generate structured risk reports. Decommissioned; now a static Streamlit portfolio documenting the architecture.",
+      "tech": "Google ADK 2.2 + Gemini 2.5 Flash (Vertex AI), Streamlit 1.58, Python 3.11, Cloud Run, Terraform, GitHub Actions + Workload Identity Federation, Artifact Registry, Docker"
+    }
   },
   {
     "id": "ai-kiosk1",
@@ -257,7 +262,12 @@
     "url": "https://oc.techcloudup.com/api/health",
     "category": "oci",
     "order": 4,
-    "stars": 5
+    "stars": 5,
+    "description": {
+      "subtitle": "Orange County Public Data Platform",
+      "purpose": "Interactive BI infographic platform visualizing Orange County, CA demographics through choropleth maps, city-level comparisons, correlation analysis, and time-series trends — community-supported, open source, and served as static files for sub-second loads.",
+      "tech": "OCI Always Free (Ampere A1.Flex, E2.1.Micro), Next.js 16 + React 19 + TypeScript 5, Tailwind CSS 4, Leaflet + react-leaflet, Chart.js + react-chartjs-2, Zustand, Terraform + Ansible, Nginx + Cloudflare, GitHub Actions"
+    }
   },
   {
     "id": "azure-sql-ev",
@@ -265,7 +275,12 @@
     "url": "https://azure-sql-ev.techcloudup.com/",
     "category": "azure",
     "order": 2,
-    "stars": 4
+    "stars": 4,
+    "description": {
+      "subtitle": "EV Registration SQL Playground",
+      "purpose": "Interactive, read-only SQL query dashboard over Washington State electric-vehicle registration data — ingesting a public Socrata dataset into an Azure SQL star schema and exposing a browser SQL playground through a serverless API.",
+      "tech": "Azure (SQL Database, Functions, Static Web Apps), React 18 + Vite, Python 3.11 (pymssql), Terraform (azurerm + azapi), GitHub Actions (OIDC)"
+    }
   },
   {
     "id": "azure-arc-hybrid",
@@ -273,7 +288,12 @@
     "url": "https://azure-arc-hybrid.techcloudup.com/",
     "category": "azure",
     "order": 3,
-    "stars": 4
+    "stars": 4,
+    "description": {
+      "subtitle": "Arc Hybrid Governance Lab",
+      "purpose": "Hands-on demonstration of hybrid governance as code — onboarding 2 on-premises Ubuntu servers to Azure Arc and layering on patching, compliance, tagging, and RBAC using only free Azure services, surfaced through a CI-refreshed compliance dashboard.",
+      "tech": "Azure (Arc, Policy, Update Manager, Log Analytics, Static Web Apps), Astro 5 + Tailwind CSS 4, Terraform (azurerm), Ansible (ansible-lockdown), Lynis, Multipass, Tailscale, GitHub Actions (OIDC)"
+    }
   },
   {
     "id": "java-redis",
