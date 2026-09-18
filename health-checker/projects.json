@@ -4,7 +4,7 @@
     "name": "AWS IAM Secure Access Hub",
     "url": "https://aws.techcloudup.com/api/health",
     "category": "aws",
-    "order": 1,
+    "order": 5,
     "stars": 5,
     "description": {
       "subtitle": "AWS Ops Hub",
@@ -17,7 +17,7 @@
     "name": "GCP Kubernetes GKE Demo",
     "url": "https://gcp-gke.techcloudup.com/api/health",
     "category": "gcp",
-    "order": 2,
+    "order": 6,
     "stars": 5,
     "description": {
       "subtitle": "GKE Private Cluster",
@@ -30,7 +30,7 @@
     "name": "Azure BI with API/DBA",
     "url": "https://dba-azure.techcloudup.com/api/health",
     "category": "azure",
-    "order": 3,
+    "order": 1,
     "stars": 5,
     "description": {
       "subtitle": "Azure Integration Lab",
@@ -42,8 +42,12 @@
     "id": "ids",
     "name": "IDS Suricata Security",
     "url": "https://ids.techcloudup.com/api/health",
-    "category": ["security", "gcp", "automation"],
-    "order": 4,
+    "category": [
+      "security",
+      "gcp",
+      "automation"
+    ],
+    "order": 7,
     "stars": 4,
     "description": {
       "subtitle": "Real-Time IDS Alerting",
@@ -55,8 +59,11 @@
     "id": "takedown",
     "name": "Phishing Investigator",
     "url": "https://takedown.techcloudup.com/api/health",
-    "category": ["security", "gcp"],
-    "order": 5,
+    "category": [
+      "security",
+      "gcp"
+    ],
+    "order": 8,
     "stars": 4,
     "description": {
       "subtitle": "Phishing Takedown Tool",
@@ -68,16 +75,22 @@
     "id": "ai-agent",
     "name": "GCP IAM Audit Agent",
     "url": "https://ai-agent.techcloudup.com/api/health",
-    "category": ["ai", "gcp"],
-    "order": 6,
+    "category": [
+      "ai",
+      "gcp"
+    ],
+    "order": 9,
     "stars": 4
   },
   {
     "id": "ai-kiosk1",
     "name": "Edge AI Object Detection",
     "url": "https://ai.kiosk1.iviewio.com/",
-    "category": ["ai", "gcp"],
-    "order": 7,
+    "category": [
+      "ai",
+      "gcp"
+    ],
+    "order": 10,
     "stars": 3,
     "description": {
       "subtitle": "Zero-cost Edge AI (Object Detection in Browser)",
@@ -89,8 +102,11 @@
     "id": "ai-kbeathub",
     "name": "K-Drama AI Recommender",
     "url": "https://ai.kbeathub.com/healthz",
-    "category": ["ai", "gcp"],
-    "order": 8,
+    "category": [
+      "ai",
+      "gcp"
+    ],
+    "order": 11,
     "stars": 3,
     "description": {
       "subtitle": "AI-powered K-Drama Recommendation Engine",
@@ -102,8 +118,11 @@
     "id": "waf",
     "name": "WAF Demo on CloudFlare",
     "url": "https://waf.techcloudup.com/api/health",
-    "category": ["security", "gcp"],
-    "order": 9,
+    "category": [
+      "security",
+      "gcp"
+    ],
+    "order": 12,
     "stars": 4,
     "description": {
       "subtitle": "Real-time SQLi/XSS Blocking Demo",
@@ -115,8 +134,11 @@
     "id": "dashboard",
     "name": "AWS IoT Core Dashboard",
     "url": "https://dashboard.iviewio.com/api/health",
-    "category": ["iot", "aws"],
-    "order": 10,
+    "category": [
+      "iot",
+      "aws"
+    ],
+    "order": 13,
     "stars": 3,
     "description": {
       "subtitle": "AWS IoT Core",
@@ -128,8 +150,11 @@
     "id": "kiosk1",
     "name": "IoT Kiosk Server",
     "url": "https://kiosk1.iviewio.com/health",
-    "category": ["iot", "gcp"],
-    "order": 11,
+    "category": [
+      "iot",
+      "gcp"
+    ],
+    "order": 14,
     "stars": 3,
     "description": {
       "subtitle": "IoT Kiosk Web Server",
@@ -142,7 +167,7 @@
     "name": "Recipe Mobile WebApp",
     "url": "https://hanrecipe.kbeathub.com/",
     "category": "app",
-    "order": 12,
+    "order": 15,
     "stars": 2,
     "description": {
       "subtitle": "Korean Recipe WebApp",
@@ -155,15 +180,18 @@
     "name": "n8n Automation",
     "url": "https://n8n.techcloudup.com/healthz",
     "category": "automation",
-    "order": 13,
+    "order": 16,
     "stars": 4
   },
   {
     "id": "techcloudup",
     "name": "AI Automated Tech Blog",
     "url": "https://techcloudup.com/wp-json/",
-    "category": ["app", "automation"],
-    "order": 14,
+    "category": [
+      "app",
+      "automation"
+    ],
+    "order": 17,
     "stars": 2
   },
   {
@@ -171,7 +199,7 @@
     "name": "ERP - ERPNext",
     "url": "https://erp.iviewio.com/api/method/ping",
     "category": "app",
-    "order": 15,
+    "order": 18,
     "stars": 3
   },
   {
@@ -179,7 +207,7 @@
     "name": "CRM - EspoCRM",
     "url": "https://crm.iviewio.com/api/v1/",
     "category": "app",
-    "order": 16,
+    "order": 19,
     "stars": 3
   },
   {
@@ -187,7 +215,7 @@
     "name": "Mailing system - Listmonk",
     "url": "https://emailm.iviewio.com/api/health",
     "category": "app",
-    "order": 17,
+    "order": 20,
     "stars": 2
   },
   {
@@ -195,7 +223,7 @@
     "name": "PRM - Monica",
     "url": "https://monica.iviewio.com/api/health",
     "category": "app",
-    "order": 18,
+    "order": 21,
     "stars": 2,
     "active": false
   },
@@ -204,7 +232,7 @@
     "name": "SNS Scheduler - Mixpost",
     "url": "https://sns.iviewio.com/api/health",
     "category": "app",
-    "order": 19,
+    "order": 22,
     "stars": 2
   },
   {
@@ -212,7 +240,7 @@
     "name": "iViewTouch - Touchscreen Tech Blog",
     "url": "https://iviewtouch.com/wp-json/",
     "category": "app",
-    "order": 20,
+    "order": 23,
     "stars": 2
   },
   {
@@ -220,7 +248,7 @@
     "name": "iViewIO - Industrial IoT Blog",
     "url": "https://iviewio.com/wp-json/",
     "category": "app",
-    "order": 21,
+    "order": 24,
     "stars": 2
   },
   {
@@ -228,7 +256,7 @@
     "name": "Orange County Infographics",
     "url": "https://oc.techcloudup.com/api/health",
     "category": "oci",
-    "order": 0,
+    "order": 4,
     "stars": 5
   },
   {
@@ -236,7 +264,7 @@
     "name": "Azure SQL Database",
     "url": "https://azure-sql-ev.techcloudup.com/",
     "category": "azure",
-    "order": 22,
+    "order": 2,
     "stars": 4
   },
   {
@@ -244,7 +272,7 @@
     "name": "Azure Arc Hybrid Cloud",
     "url": "https://azure-arc-hybrid.techcloudup.com/",
     "category": "azure",
-    "order": 23,
+    "order": 3,
     "stars": 4
   },
   {
@@ -252,7 +280,7 @@
     "name": "Java Redis Service",
     "url": "https://java-redis.techcloudup.com/",
     "category": "app",
-    "order": 24,
+    "order": 25,
     "stars": 3
   },
   {
@@ -260,7 +288,7 @@
     "name": "IT Compliance Framework",
     "url": "https://github.com/scale600/it-compliance-framework",
     "category": "security",
-    "order": 25,
+    "order": 26,
     "stars": 4
   }
 ]
