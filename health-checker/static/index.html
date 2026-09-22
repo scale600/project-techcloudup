@@ -366,7 +366,7 @@ function renderGrid(projects) {
   }
 
   grid.innerHTML = entries.map(([, p]) => {
-    const domain = p.url ? new URL(p.url).hostname : '';
+    const domain = p.domain ? p.domain : (p.url ? new URL(p.url).hostname : '');
     const siteUrl = p.link ? p.link : (p.url ? new URL(p.url).origin + '/' : '#');
     const d = p.description;
     const tooltip = d ? `
