@@ -186,7 +186,12 @@
     "url": "https://n8n.techcloudup.com/healthz",
     "category": "automation",
     "order": 16,
-    "stars": 4
+    "stars": 4,
+    "description": {
+      "subtitle": "AI-Powered Multi-Site Blog Automation Hub",
+      "purpose": "Self-hosted n8n automation server that generates and publishes SEO-optimized blog posts and SNS content across 9 WordPress sites — orchestrating Groq Llama 3.3 70B for content generation, Tavily for live web search, SerpAPI for keyword analysis, and Google Sheets as the polling trigger.",
+      "tech": "n8n (Community Edition), GCP (Compute Engine, us-central1-a), Docker Compose + Caddy + Cloudflare, Groq Llama 3.3 70B, Tavily, SerpAPI, Pollinations.ai (FLUX.1-schnell), Google Sheets OAuth2, WordPress REST API"
+    }
   },
   {
     "id": "techcloudup",
@@ -301,7 +306,12 @@
     "url": "https://java-redis.techcloudup.com/",
     "category": "app",
     "order": 25,
-    "stars": 3
+    "stars": 3,
+    "description": {
+      "subtitle": "Real-Time Traffic Analytics Lab",
+      "purpose": "A fully serverless visitor analytics dashboard that records every page hit into Upstash Redis via a Java 17 Lambda backend and renders live traffic trends, path views, and recent-visit logs — demonstrating Redis-based time-series aggregation (hourly/daily/weekly rollups, HyperLogLog unique-visitor counting) on the AWS free tier.",
+      "tech": "Java 17, AWS (Lambda + SnapStart, API Gateway, CloudFront, S3, EventBridge, CloudWatch), Upstash Redis (serverless), Maven (uber-JAR), React, Chart.js, Terraform, Cloudflare (DNS)"
+    }
   },
   {
     "id": "it-compliance-framework",
@@ -311,6 +321,11 @@
     "domain": "github.com/scale600",
     "category": "security",
     "order": 26,
-    "stars": 4
+    "stars": 4,
+    "description": {
+      "subtitle": "IT & OT Compliance Framework (Manufacturing)",
+      "purpose": "Publicly document a complete manufacturing compliance program — GDPR/CCPA privacy (Policy, RoPA, DPA, DSAR), an integrated annual IT & OT audit (10-domain checklist, CAP tracker, IEC 62443), and a TPRM vendor-risk lifecycle — as verifiable portfolio evidence built and run at Sena Technologies during IPO preparation and the Bose partnership.",
+      "tech": "Markdown, Mermaid (architecture/flow diagrams), GitHub (version-controlled portfolio), GDPR/CCPA/CPRA & IEC 62443 frameworks, Zero-Trust (Intune + Okta) controls"
+    }
   }
 ]
