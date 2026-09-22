@@ -301,6 +301,11 @@ async def route_status():
         if pid in projects:
             projects[pid]["description"] = desc
 
+    # Attach optional link override (e.g. GitHub repos without a separate site)
+    for p in _projects():
+        if p.get("link") and p["id"] in projects:
+            projects[p["id"]]["link"] = p["link"]
+
     live = sum(1 for p in projects.values() if p.get("status") == "live")
     down = sum(1 for p in projects.values() if p.get("status") == "down")
 

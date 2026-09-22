@@ -237,9 +237,9 @@ footer { text-align: center; padding: 28px 0; color: var(--muted); font-size: 12
 </div>
 <div class="container">
   <div class="hero">
-    <div class="hero-title">Services Across Multi-Cloud, Self-Managed Production Infrastructure</div>
-    <div class="hero-categories">IAM Auditing · Private GKE · Cloudflare WAF · Suricata IDS · ERPNext · EspoCRM · IoT Core · Edge AI Detection</div>
-    <div class="hero-platforms">Terraform IaC · GitHub Actions CI/CD · Cloud Run · Firestore · n8n Automation</div>
+    <div class="hero-title">Multi-Cloud Projects — Live Services Across AWS, GCP, Azure &amp; OCI</div>
+    <div class="hero-categories">AWS IAM Security · Private GKE Kubernetes · Azure SQL · Azure Arc Hybrid Cloud · Edge AI Object Detection</div>
+    <div class="hero-platforms">Terraform IaC · GitHub Actions CI/CD · Cloud Armor · Grafana · Transformers.js (WebGPU)</div>
   </div>
   <div class="filters" id="filters"></div>
   <div class="grid" id="grid">
@@ -367,7 +367,7 @@ function renderGrid(projects) {
 
   grid.innerHTML = entries.map(([, p]) => {
     const domain = p.url ? new URL(p.url).hostname : '';
-    const siteUrl = p.url ? new URL(p.url).origin + '/' : '#';
+    const siteUrl = p.link ? p.link : (p.url ? new URL(p.url).origin + '/' : '#');
     const d = p.description;
     const tooltip = d ? `
       <div class="card-tooltip">
