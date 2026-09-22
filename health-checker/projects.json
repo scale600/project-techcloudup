@@ -324,7 +324,7 @@
     "stars": 4,
     "description": {
       "subtitle": "IT & OT Compliance Framework (Manufacturing)",
-      "purpose": "Publicly document a complete manufacturing compliance program — GDPR/CCPA privacy (Policy, RoPA, DPA, DSAR), an integrated annual IT & OT audit (10-domain checklist, CAP tracker, IEC 62443), and a TPRM vendor-risk lifecycle — as verifiable portfolio evidence built and run at Company during IPO preparation and the Bose partnership.",
+      "purpose": "Publicly document a complete manufacturing compliance program — GDPR/CCPA privacy (Policy, RoPA, DPA, DSAR), an integrated annual IT & OT audit (10-domain checklist, CAP tracker, IEC 62443), and a TPRM vendor-risk lifecycle — as verifiable portfolio evidence built and run at Company for IPO readiness and a strategic customer partnership.",
       "tech": "Markdown, Mermaid (architecture/flow diagrams), GitHub (version-controlled portfolio), GDPR/CCPA/CPRA & IEC 62443 frameworks, Zero-Trust (Intune + Okta) controls"
     }
   }
