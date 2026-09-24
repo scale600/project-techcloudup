@@ -51,7 +51,7 @@
     "stars": 4,
     "description": {
       "subtitle": "Real-Time IDS Alerting",
-      "purpose": "Build a low-cost, real-time network intrusion detection system that parses Suricata logs and delivers instant alerts via a web dashboard.",
+      "purpose": "Build a real-time network intrusion detection system that parses Suricata logs and delivers instant alerts via a web dashboard.",
       "tech": "Suricata (eve.json), n8n (workflow automation), Flask (Python API), GCP Compute Engine"
     }
   },
@@ -98,8 +98,8 @@
     "order": 10,
     "stars": 3,
     "description": {
-      "subtitle": "Zero-cost Edge AI (Object Detection in Browser)",
-      "purpose": "Implement browser-based object detection using Transformers.js and DETR ONNX, leveraging WebGPU and WASM for high performance, all hosted on Netlify at no cost.",
+      "subtitle": "Edge AI (Object Detection in Browser)",
+      "purpose": "Implement browser-based object detection using Transformers.js and DETR ONNX, leveraging WebGPU and WASM for high performance, hosted on Netlify.",
       "tech": "Netlify, Transformers.js, DETR ONNX, WebGPU, WASM"
     }
   },
@@ -271,7 +271,7 @@
     "description": {
       "subtitle": "Orange County Public Data Platform",
       "purpose": "Interactive BI infographic platform visualizing Orange County, CA demographics through choropleth maps, city-level comparisons, correlation analysis, and time-series trends — community-supported, open source, and served as static files for sub-second loads.",
-      "tech": "OCI Always Free (Ampere A1.Flex, E2.1.Micro), Next.js 16 + React 19 + TypeScript 5, Tailwind CSS 4, Leaflet + react-leaflet, Chart.js + react-chartjs-2, Zustand, Terraform + Ansible, Nginx + Cloudflare, GitHub Actions"
+      "tech": "OCI (Ampere A1.Flex, E2.1.Micro), Next.js 16 + React 19 + TypeScript 5, Tailwind CSS 4, Leaflet + react-leaflet, Chart.js + react-chartjs-2, Zustand, Terraform + Ansible, Nginx + Cloudflare, GitHub Actions"
     }
   },
   {
@@ -296,7 +296,7 @@
     "stars": 4,
     "description": {
       "subtitle": "Arc Hybrid Governance Lab",
-      "purpose": "Hands-on demonstration of hybrid governance as code — onboarding 2 on-premises Ubuntu servers to Azure Arc and layering on patching, compliance, tagging, and RBAC using only free Azure services, surfaced through a CI-refreshed compliance dashboard.",
+      "purpose": "Hands-on demonstration of hybrid governance as code — onboarding 2 on-premises Ubuntu servers to Azure Arc and layering on patching, compliance, tagging, and RBAC using Azure services, surfaced through a CI-refreshed compliance dashboard.",
       "tech": "Azure (Arc, Policy, Update Manager, Log Analytics, Static Web Apps), Astro 5 + Tailwind CSS 4, Terraform (azurerm), Ansible (ansible-lockdown), Lynis, Multipass, Tailscale, GitHub Actions (OIDC)"
     }
   },
@@ -309,7 +309,7 @@
     "stars": 3,
     "description": {
       "subtitle": "Real-Time Traffic Analytics Lab",
-      "purpose": "A fully serverless visitor analytics dashboard that records every page hit into Upstash Redis via a Java 17 Lambda backend and renders live traffic trends, path views, and recent-visit logs — demonstrating Redis-based time-series aggregation (hourly/daily/weekly rollups, HyperLogLog unique-visitor counting) on the AWS free tier.",
+      "purpose": "A fully serverless visitor analytics dashboard that records every page hit into Upstash Redis via a Java 17 Lambda backend and renders live traffic trends, path views, and recent-visit logs — demonstrating Redis-based time-series aggregation (hourly/daily/weekly rollups, HyperLogLog unique-visitor counting).",
       "tech": "Java 17, AWS (Lambda + SnapStart, API Gateway, CloudFront, S3, EventBridge, CloudWatch), Upstash Redis (serverless), Maven (uber-JAR), React, Chart.js, Terraform, Cloudflare (DNS)"
     }
   },
