@@ -113,6 +113,7 @@
     ],
     "order": 11,
     "stars": 3,
+    "active": false,
     "description": {
       "subtitle": "AI-powered K-Drama Recommendation Engine",
       "purpose": "Build a recommendation engine for Korean dramas using Streamlit, the Groq API with Llama models, and hosted on GCP.",
@@ -174,6 +175,7 @@
     "category": "app",
     "order": 15,
     "stars": 2,
+    "active": false,
     "description": {
       "subtitle": "Korean Recipe WebApp",
       "purpose": "Develop a web application for Korean recipes using Flutter for the frontend, Firebase Firestore for database, Riverpod for state management, and Google Authentication for user login.",
