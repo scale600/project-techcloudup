@@ -1,0 +1,38 @@
+# GCP secrets / credentials
+.env
+*-key.json
+
+# Korean docs
+*-kor.md
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+
+# Terraform
+.terraform/
+.terraform.lock.hcl
+terraform.tfstate*
+
+# Docker artifacts
+*.tar
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Playwright / screenshots
+.playwright-mcp/
+*.png
+
+# AI agent artifacts
+.omo/
+ui-improvements.md
+token-efficiency.md
+
+# Firebase
+dashboard/firebase-debug.log
+
+# VCS
+.git/
