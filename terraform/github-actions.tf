@@ -67,7 +67,7 @@ resource "google_project_iam_member" "github_ar_writer" {
 
 # Deployer can act as the runtime (compute) service account when deploying.
 resource "google_service_account_iam_member" "github_act_as_compute" {
-  service_account_id = "${data.google_project.this.number}-compute@developer.gserviceaccount.com"
+  service_account_id = "projects/${var.project_id}/serviceAccounts/${data.google_project.this.number}-compute@developer.gserviceaccount.com"
   role               = "roles/iam.serviceAccountUser"
   member             = "serviceAccount:${google_service_account.github_actions.email}"
 }
