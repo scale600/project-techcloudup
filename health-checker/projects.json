@@ -4,7 +4,7 @@
     "name": "AWS IAM Secure Access Hub",
     "url": "https://aws.techcloudup.com/api/health",
     "category": "aws",
-    "order": 6,
+    "order": 7,
     "stars": 5,
     "description": {
       "subtitle": "AWS Ops Hub",
@@ -17,7 +17,7 @@
     "name": "GCP Kubernetes GKE Demo",
     "url": "https://gcp-gke.techcloudup.com/api/health",
     "category": "gcp",
-    "order": 7,
+    "order": 8,
     "stars": 5,
     "description": {
       "subtitle": "GKE Private Cluster",
@@ -47,7 +47,7 @@
       "gcp",
       "automation"
     ],
-    "order": 8,
+    "order": 9,
     "stars": 4,
     "description": {
       "subtitle": "Real-Time IDS Alerting",
@@ -63,7 +63,7 @@
       "security",
       "gcp"
     ],
-    "order": 9,
+    "order": 10,
     "stars": 4,
     "description": {
       "subtitle": "Phishing Takedown Tool",
@@ -79,7 +79,7 @@
       "ai",
       "gcp"
     ],
-    "order": 10,
+    "order": 11,
     "stars": 4,
     "description": {
       "subtitle": "GCP IAM Security Audit Agent",
@@ -95,7 +95,7 @@
       "ai",
       "gcp"
     ],
-    "order": 11,
+    "order": 12,
     "stars": 3,
     "description": {
       "subtitle": "Edge AI (Object Detection in Browser)",
@@ -111,7 +111,7 @@
       "ai",
       "gcp"
     ],
-    "order": 12,
+    "order": 13,
     "stars": 3,
     "active": false,
     "description": {
@@ -128,7 +128,7 @@
       "security",
       "gcp"
     ],
-    "order": 13,
+    "order": 14,
     "stars": 4,
     "description": {
       "subtitle": "Real-time SQLi/XSS Blocking Demo",
@@ -144,7 +144,7 @@
       "iot",
       "aws"
     ],
-    "order": 14,
+    "order": 15,
     "stars": 3,
     "description": {
       "subtitle": "AWS IoT Core",
@@ -160,7 +160,7 @@
       "iot",
       "gcp"
     ],
-    "order": 15,
+    "order": 16,
     "stars": 3,
     "description": {
       "subtitle": "IoT Kiosk Web Server",
@@ -173,7 +173,7 @@
     "name": "Recipe Mobile WebApp",
     "url": "https://hanrecipe.kbeathub.com/",
     "category": "app",
-    "order": 16,
+    "order": 17,
     "stars": 2,
     "active": false,
     "description": {
@@ -187,7 +187,7 @@
     "name": "n8n Automation",
     "url": "https://n8n.techcloudup.com/healthz",
     "category": "automation",
-    "order": 17,
+    "order": 18,
     "stars": 4,
     "description": {
       "subtitle": "AI-Powered Multi-Site Blog Automation Hub",
@@ -203,7 +203,7 @@
       "app",
       "automation"
     ],
-    "order": 18,
+    "order": 19,
     "stars": 2
   },
   {
@@ -211,7 +211,7 @@
     "name": "ERP - ERPNext",
     "url": "https://erp.iviewio.com/api/method/ping",
     "category": "app",
-    "order": 19,
+    "order": 20,
     "stars": 3
   },
   {
@@ -219,7 +219,7 @@
     "name": "CRM - EspoCRM",
     "url": "https://crm.iviewio.com/api/v1/",
     "category": "app",
-    "order": 20,
+    "order": 21,
     "stars": 3
   },
   {
@@ -227,7 +227,7 @@
     "name": "Mailing system - Listmonk",
     "url": "https://emailm.iviewio.com/api/health",
     "category": "app",
-    "order": 21,
+    "order": 22,
     "stars": 2
   },
   {
@@ -235,7 +235,7 @@
     "name": "PRM - Monica",
     "url": "https://monica.iviewio.com/api/health",
     "category": "app",
-    "order": 22,
+    "order": 23,
     "stars": 2,
     "active": false
   },
@@ -244,7 +244,7 @@
     "name": "SNS Scheduler - Mixpost",
     "url": "https://sns.iviewio.com/api/health",
     "category": "app",
-    "order": 23,
+    "order": 24,
     "stars": 2
   },
   {
@@ -252,7 +252,7 @@
     "name": "iViewTouch - Touchscreen Tech Blog",
     "url": "https://iviewtouch.com/wp-json/",
     "category": "app",
-    "order": 24,
+    "order": 25,
     "stars": 2
   },
   {
@@ -260,7 +260,7 @@
     "name": "iViewIO - Industrial IoT Blog",
     "url": "https://iviewio.com/wp-json/",
     "category": "app",
-    "order": 25,
+    "order": 26,
     "stars": 2
   },
   {
@@ -268,7 +268,7 @@
     "name": "Orange County Infographics",
     "url": "https://oc.techcloudup.com/api/health",
     "category": "oci",
-    "order": 5,
+    "order": 6,
     "stars": 5,
     "description": {
       "subtitle": "Orange County Public Data Platform",
@@ -320,7 +320,7 @@
     "name": "Java Redis Service",
     "url": "https://java-redis.techcloudup.com/",
     "category": "app",
-    "order": 26,
+    "order": 27,
     "stars": 3,
     "description": {
       "subtitle": "Real-Time Traffic Analytics Lab",
@@ -335,12 +335,25 @@
     "link": "https://github.com/scale600/it-compliance-framework",
     "domain": "github.com/scale600",
     "category": "security",
-    "order": 27,
+    "order": 28,
     "stars": 4,
     "description": {
       "subtitle": "IT & OT Compliance Framework (Manufacturing)",
       "purpose": "Publicly document a complete manufacturing compliance program — GDPR/CCPA privacy (Policy, RoPA, DPA, DSAR), an integrated annual IT & OT audit (10-domain checklist, CAP tracker, IEC 62443), and a TPRM vendor-risk lifecycle — as verifiable portfolio evidence built and run at a company for IPO readiness and a strategic customer partnership.",
       "tech": "Markdown, Mermaid (architecture/flow diagrams), GitHub (version-controlled portfolio), GDPR/CCPA/CPRA & IEC 62443 frameworks, Zero-Trust (Intune + Okta) controls"
+    }
+  },
+  {
+    "id": "azure-ai-rag",
+    "name": "Azure AI RAG Chatbot",
+    "url": "https://azure-ai-rag.techcloudup.com/",
+    "category": "azure",
+    "order": 5,
+    "stars": 4,
+    "description": {
+      "subtitle": "RAG-Powered Chatbot",
+      "purpose": "Retrieval-Augmented Generation chatbot that grounds Azure OpenAI responses in an Azure AI Search index over private documents, with citations and a browser frontend.",
+      "tech": "Azure AI Search, Azure OpenAI (GPT), Azure Functions, Azure Static Web Apps, Terraform, GitHub Actions (OIDC)"
     }
   }
 ]
