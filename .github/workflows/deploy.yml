@@ -32,6 +32,7 @@ jobs:
           project_id: ${{ env.PROJECT_ID }}
           workload_identity_provider: ${{ secrets.GCP_WIF_PROVIDER }}
           service_account: ${{ secrets.GCP_SA_EMAIL }}
+          token_format: access_token
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
